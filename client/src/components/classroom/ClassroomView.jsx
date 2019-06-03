@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap'
 
+import Node from '../molecules/Node'
+
 class ClassroomView extends Component {
 
     constructor(props) {
@@ -26,11 +28,7 @@ class ClassroomView extends Component {
                     
                     <div id="collapseOne" className="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                         <div className="node-list">
-                            <div className="node">
-                                <img src="profile_pic.png" alt="test" className="node-img rounded-circle"/>
-                                <span className="node-text" >Rafael</span>
-                                <span className="node-text-number ml-5">38</span>
-                            </div>
+                            <Node imgSrc="profile_pic.png" imgAlt="test" text="testText" value="10" />
                             <div className="node">
                                 <img src="profile_pic.png" alt="test" className="node-img rounded-circle"/>
                                 <span className="node-text" >Rafael Augusto</span>
