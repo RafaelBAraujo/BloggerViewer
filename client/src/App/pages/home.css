@@ -1,0 +1,28 @@
+.App {
+    text-align: center;
+    margin: 4%;
+    display: grid;
+    grid-template-columns: 30% 30% 30%;
+    grid-template-rows: 30% 60%;
+    grid-gap: 40px;
+}
+
+.welcome-text {
+    grid-row: 1;
+    grid-column: 1 / 4;
+}
+
+.blog {
+    margin-top: 20%;
+    background-color: #444;
+    color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    font-size: 150%;
+    text-decoration: none;
+    width: 100%;
+}
+
+.blog:hover {
+    background-color: #666;
+}
