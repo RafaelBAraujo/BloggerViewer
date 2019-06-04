@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/js/bootstrap'
 
 import NodeList from '../molecules/NodeList'
 
@@ -10,6 +9,7 @@ class ClassroomView extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: '',
             title: '',
             content: null,
         };
@@ -22,23 +22,19 @@ class ClassroomView extends Component {
             { imgSrc: 'profile_pic.png', imgAlt: 'loopTest', text: 'Loop Test', value: '80'},
             { imgSrc: 'profile_pic.png', imgAlt: 'loopTest', text: 'Loop Test', value: '80'}
         ]
+        let target = '#' + this.props.id
         return(
-            <div className="accordion classroom" id="accordionExample">
-                <div className="classroom-view">
-                    <h2 className="mb-0">
-                        <button className="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            <i className="material-icons">keyboard_arrow_down</i>
-                            Número de comentários
-                        </button>
-                    </h2>
-                    
-                    <div id="collapseOne" className="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                        <NodeList nodes={nodes} />
-
+            <div className="classroom-view">
+                <h2 className="mb-0">
+                    <button className="btn btn-link" data-toggle="collapse" data-target={target} aria-expanded="true" aria-controls={this.props.id}>
+                        <i className="material-icons">keyboard_arrow_down</i>
+                        {this.props.title}
+                    </button>
+                </h2>
+                <div id={this.props.id} className="collapse" data-parent="#accordion">
+                    <NodeList nodes={nodes} />
                 </div>
             </div>
-
-        </div>
         );
     }
 }
