@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap'
 
-import Node from '../molecules/Node'
+import NodeList from '../molecules/NodeList'
 
 class ClassroomView extends Component {
 
@@ -16,6 +16,12 @@ class ClassroomView extends Component {
     }
 
     render() {
+        const nodes = [
+            { imgSrc: 'profile_pic.png', imgAlt: 'loopTest', text: 'Loop Test', value: '80'},
+            { imgSrc: 'profile_pic.png', imgAlt: 'loopTest', text: 'Loop Test', value: '80'},
+            { imgSrc: 'profile_pic.png', imgAlt: 'loopTest', text: 'Loop Test', value: '80'},
+            { imgSrc: 'profile_pic.png', imgAlt: 'loopTest', text: 'Loop Test', value: '80'}
+        ]
         return(
             <div className="accordion classroom" id="accordionExample">
                 <div className="classroom-view">
@@ -27,14 +33,8 @@ class ClassroomView extends Component {
                     </h2>
                     
                     <div id="collapseOne" className="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                        <div className="node-list">
-                            <Node imgSrc="profile_pic.png" imgAlt="test" text="Rafael Augusto" value="10" />
-                            <div className="node">
-                                <img src="profile_pic.png" alt="test" className="node-img rounded-circle"/>
-                                <span className="node-text" >Rafael Augusto</span>
-                                <span className="node-text-number ml-5">38</span>
-                            </div>
-                    </div>
+                        <NodeList nodes={nodes} />
+
                 </div>
             </div>
 
