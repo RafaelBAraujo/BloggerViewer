@@ -17,9 +17,9 @@ class Drawer extends Component {
 
     render() {
         return(
-            <div id="mySidenav" class="sidenav">
-                <a class="closebtn" onClick={this.handleClick.bind(this)}><i class="material-icons">menu</i></a>
-                <a class="post" >Post Title</a>
+            <div id="mySidenav" className="sidenav">
+                <a className="closebtn" onClick={this.handleClick.bind(this)}><i className="material-icons">menu</i></a>
+                <a className="post" >Post Title</a>
             </div>
         )
     }

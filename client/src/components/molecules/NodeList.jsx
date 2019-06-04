@@ -1,12 +1,13 @@
 import React from 'react'
 
-import Node from 'Node'
+import Node from './Node'
 
 const NodeList = ({nodes}) => {
     return(
         <div className="node-list">
-            {nodes.forEach(node => {
-                return(
+            {nodes.map(function(node){
+                console.log(node)
+                return (
                     <Node imgSrc={node.imgSrc} imgAlt={node.imgAlt} text={node.text} value={node.value} />
                 )
             })}
