@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 
 import Classroom from '../../components/organisms/Classroom'
-import MenuBar from '../../components/menubar/MenuBar'
-import DrawerButton from '../../components/menubar/DrawerButton'
-import Drawer from '../../components/menubar/Drawer'
+import MenuBar from '../../components/molecules/MenuBar'
+import Drawer from '../../components/organisms/Drawer'
 import Diagram from '../../components/diagram/Diagram'
 import Post from '../../components/organisms/Post'
 
@@ -65,12 +64,16 @@ class Visualizer extends Component {
             ]
           }
         
+        let postsList = [
+          { title: 'Post Title 1' },
+          { title: 'Post Title 2' },
+          { title: 'Post Title 2' },
+        ]
         return (
             <div className='visualizer'>
                 <Classroom views={null}/>
                 <MenuBar />
-                <DrawerButton />
-                <Drawer />
+                <Drawer postsList={postsList}/>
                 <Diagram />
                 <Post title={post.title} content={post.content} comments={post.comments}/>
             </div>
