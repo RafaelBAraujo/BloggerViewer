@@ -37,3 +37,9 @@ function switchView(view) {
     }
     
 }
+
+export const search = () => {
+
+    console.log('hey, it has changed; BUT I\'M THE ONE WHO NEEDS CHANGING');
+
+}
