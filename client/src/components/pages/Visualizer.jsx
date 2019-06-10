@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 import VisualizerTemplate from '../templates/VisualizerTemplate'
+import LoadingScreen from '../molecules/LoaderScreen'
 
 class Visualizer extends Component {
 
@@ -30,9 +31,9 @@ class Visualizer extends Component {
         return(
             <div>
                 {Object.entries(data).length !== 0 && data.constructor === Object ? (
-                    <VisualizerTemplate data={data} />
-                ) : (
-                    <h2>No List Items Found</h2>
+                        <LoadingScreen />
+                    ) : (
+                        <VisualizerTemplate data={data} />
                 )
                 }
             </div>
