@@ -32,6 +32,7 @@ app.get('/visualizer/:postId', (req, res) => {
             content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In non pharetra quam, mollis pulvinar nunc. ',
             responses: [
               {
+                id: 1,
                 author: {
                   name: 'Rafael Augusto',
                   pic: {
@@ -54,6 +55,7 @@ app.get('/visualizer/:postId', (req, res) => {
             content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In non pharetra quam, mollis pulvinar nunc. ',
             responses: [
               {
+                id: 2,
                 author: {
                   name: 'Rafael Augusto',
                   pic: {
