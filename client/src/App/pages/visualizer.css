@@ -267,8 +267,9 @@
   }
   
   .post:hover {
-    color: var(--primary-color-dark);
+    cursor: pointer;
     background-color: rgba(102, 128, 141, 0.12);
+    color: var(--primary-color-dark);
   }
   
 .sidenav .closebtn {
@@ -280,7 +281,9 @@
 }
 
 .closebtn {
-    justify-self: flex-start; color: #575757;
+    cursor: pointer;
+    justify-self: flex-end; 
+    color: #575757;
 }
 
 .profile-pic { 
