@@ -297,6 +297,15 @@
 
 }
 
+.loading-overlay {
+    width: 100%;
+    height: 100%;
+    background-color: orange;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .profile-name { font-weight: bold; margin-top: 1%; margin-left: 2%; }
 .post-title { font-size: 1.5em; font-weight: bold; margin-top: 1.5%; margin-left: 2%; float: left; }
 
