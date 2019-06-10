@@ -8,7 +8,6 @@ class Home extends Component {
     return (
     <div className="App">
     
-
         <h1 className="welcome-text">Welcoming Text!</h1>
 
         <Link to={'./visualizer'}>
