@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import VisualizerTemplate from '../templates/VisualizerTemplate'
-import LoadingScreen from '../molecules/LoaderScreen'
+import LoadingScreen from '../molecules/LoadingScreen'
 
 class Visualizer extends Component {
 
@@ -31,9 +31,9 @@ class Visualizer extends Component {
         return(
             <div>
                 {Object.entries(data).length !== 0 && data.constructor === Object ? (
-                        <LoadingScreen />
-                    ) : (
                         <VisualizerTemplate data={data} />
+                    ) : (
+                        <LoadingScreen />
                 )
                 }
             </div>
