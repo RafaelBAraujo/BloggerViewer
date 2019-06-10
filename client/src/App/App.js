@@ -4,7 +4,7 @@ import './App.css';
 
 import Home from './pages/Home';
 import List from './pages/List';
-import Visualizer from './pages/Visualizer';
+import Visualizer from '../components/pages/Visualizer';
 
 
 class App extends Component {

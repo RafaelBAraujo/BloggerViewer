@@ -38,8 +38,8 @@ function switchView(view) {
     
 }
 
-export const search = () => {
+export const search = (input) => {
 
-    console.log('hey, it has changed; BUT I\'M THE ONE WHO NEEDS CHANGING');
+    //new Mark(document.querySelector('.context')).mark('Lorem');
 
 }

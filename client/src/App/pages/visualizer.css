@@ -37,15 +37,20 @@
 }
 
 .classroom-view {
-    width: inherit;
+    width: 100%;
 }
 
 .classroom-view button {
     width: 95%;
+    margin-left: 2.5%;
     padding-top: 6%;
     padding-bottom: 6%;
     margin-top: 2%;
     background-color: #fafafa;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .classroom-view h2 button {
@@ -65,6 +70,7 @@
 
 .tab {
     height: 100%;
+    width: 30%;
     padding-left: 4%;
     padding-right: 20%;
     background-color: #90A4AE;
@@ -92,6 +98,7 @@
     align-self: center;
     align-items: center;
     height: 60%;
+    width: 32%;
     margin: 2%;
     background-color: rgba(0, 0, 0, 0.1);
 }
@@ -99,12 +106,16 @@
 .search-bar input {
     border: 0px solid;
     padding: 5%;
+    width: 95%;
     outline: none;
     background-color: rgba(0, 0, 0, 0.0);
 }
 
 .search-bar i {
-    padding: 1% 3% 0% 0%;
+    padding: 0.5% 3% 0% 0%;
+    width: 5%;
+    margin-right: 2%;
+    margin-left: auto;
 }
 
 .comments {
@@ -141,18 +152,18 @@
 }
 
 .comment-header {
+    display: flex;
     padding: 1% 0% 0% 1%;
     margin-bottom: 1%;
-    width: 100%;
 }
-
+/*
 .comment-picture {
     margin: 0% 1% 1% 0%;
     margin-right: 2.5%;
     width: 40px;
     height: 40px;
 }
-
+*/
 .comment-content {
     padding: 0% 1% 1% 1%;
     text-align: justify;
@@ -274,7 +285,6 @@
 
 .profile-pic { 
     margin-top: .5%;
-    float: left;
     width: 30px;
     height: 30px; 
 }
@@ -284,8 +294,8 @@
 
 }
 
-.profile-name { font-weight: bold; margin-top: 1%; margin-left: 2%; float: left; }
-.post-title { font-weight: bold; margin-top: 1.5%; margin-left: 2%; float: left; }
+.profile-name { font-weight: bold; margin-top: 1%; margin-left: 2%; }
+.post-title { font-size: 1.5em; font-weight: bold; margin-top: 1.5%; margin-left: 2%; float: left; }
 
 button { border: none; }
 button:focus { outline:0; }

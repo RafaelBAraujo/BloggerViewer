@@ -1,2 +1,7 @@
-.env.staging
+node_modules/
+private/
+doc/
+
+.env.*
+.env
 *.log

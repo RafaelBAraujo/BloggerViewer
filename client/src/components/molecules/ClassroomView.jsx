@@ -18,10 +18,12 @@ const ClassroomView = ({id, title, content}) => {
     return(
         <div className="classroom-view">
             <h2 className="mb-0">
-                <button className="btn btn-link" data-toggle="collapse" data-target={target} aria-expanded="true" aria-controls={id}>
-                    <i className="material-icons">keyboard_arrow_down</i>
-                    {title}
-                </button>
+                <div>
+                    <button className="btn btn-link" data-toggle="collapse" data-target={target} aria-expanded="true" aria-controls={id}>
+                        {title}
+                        <i className="material-icons">keyboard_arrow_down</i>
+                    </button>
+                </div>
             </h2>
             <div id={id} className="collapse" data-parent="#accordion">
                 <NodeList nodes={nodes} />
