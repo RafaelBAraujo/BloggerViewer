@@ -135,6 +135,13 @@
     align-self: flex-end;
 }
 
+.comment-published {
+    align-self: center;
+    margin-left: auto;
+    color: darkgray;
+    font-size: .8em;
+}
+
 .post-content {
     display: flex;
     flex-flow: column;
@@ -145,10 +152,11 @@
 
 .response {
     align-self: flex-end;
+    justify-self: flex-end;
     width: 80%;
     margin: 0% 4% 4%;
     padding: 2%;
-    background-color: #fff;
+    background-color: hsl(0, 0%, 98%) !important;
 }
 
 .comment-header {
@@ -308,6 +316,34 @@
 
 mark {
     background: lightcoral;
+}
+
+.expand-replies-btn {
+    display: flex;
+    align-items: center;
+    width: 20%;
+    margin-left: auto;
+    margin-bottom: 3%;
+    margin-top: 4%;
+    color: #3281c2;
+    background-color: rgba(0, 0, 0, 0.0);
+}
+
+.expand-replies-btn:hover {
+    text-decoration: underline;
+}
+
+.expand-replies-btn i {
+    transition: 500ms ease-out;
+    color: black;
+    padding-left: 5%;
+    pointer-events: none;
+}
+
+.rotate {
+    transition: 500ms ease-in;
+    transform-origin: center center;
+    transform: rotateX(180deg);
 }
 
 .profile-name { font-weight: bold; margin-top: 1%; margin-left: 2%; }

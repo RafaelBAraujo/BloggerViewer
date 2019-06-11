@@ -19,7 +19,15 @@ class Visualizer extends Component {
 
     getPostData = () => {
         console.log('fetching data...')
-        fetch('/visualizer/getpost')
+        fetch('/visualizer/getLastPost')
+        .then(res => res.json())
+        .then(data => this.setState({ data }))
+    }
+
+    getPost = (postId) => {
+        this.setState({ data: {} })
+        console.log('fetching data...')
+        fetch('/visualizer/getPost/' + postId)
         .then(res => res.json())
         .then(data => this.setState({ data }))
     }
@@ -31,7 +39,7 @@ class Visualizer extends Component {
         return(
             <div>
                 {Object.entries(data).length !== 0 && data.constructor === Object ? (
-                        <VisualizerTemplate data={data} />
+                        <VisualizerTemplate data={data} action={this.getPost} />
                     ) : (
                         <LoadingScreen />
                 )

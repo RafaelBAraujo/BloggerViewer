@@ -1,10 +1,11 @@
 import React from 'react';
 import NodeList from './NodeList'
 
-import 'bootstrap/dist/css/bootstrap.css';
-
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/js/bootstrap'
 
 const ClassroomView = ({id, title, content}) => {
+
 
     let target = '#' + id
 
