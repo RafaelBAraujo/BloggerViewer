@@ -10,10 +10,6 @@ class Diagram extends Component {
 
                 </canvas>
 
-                <div className="node">
-                    <img src="profile_pic.png" alt="test" className="node-img rounded-circle"/>
-                </div>
-
             </div>
         )
     }

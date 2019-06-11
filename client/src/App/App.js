@@ -13,7 +13,9 @@ class App extends PureComponent {
       <div>
         <Switch>
           <Route exact path='/' component={Home}/>
-          <Route exact path='/visualizer' component={Visualizer}/>
+          <Route exact path='/visualizer/adm_tec' component={() => <Visualizer blog={'adm_tec'} />}/>
+          <Route exact path='/visualizer/adm_si' component={() => <Visualizer blog={'adm_si'} />}/>
+          <Route exact path='/visualizer/tgs' component={() => <Visualizer blog={'tgs'} />}/>
           <Route path='/list' component={List}/>
         </Switch>
       </div>

@@ -142,6 +142,13 @@
     font-size: .8em;
 }
 
+.ribbon {
+    background-color: lightgreen;
+    height: 100%;
+    width: 40%;
+    margin-right: auto;
+}
+
 .post-content {
     display: flex;
     flex-flow: column;
@@ -177,6 +184,11 @@
     text-align: justify;
 }
 
+.post-text {
+    padding: 0% 1% 1% 1%;
+    text-align: justify;
+}
+
 .diagram {
     overflow-y: auto;
     background-color: #e0e0e0;
@@ -204,20 +216,25 @@
 }
 
 .node {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: 2%;
 }
 
 .node-img {
-    float: left;
     height: 10%;
     width: 10%;
-    margin-top: 1%;
+    margin-top: 4%;
 }
 
 .node-text {
+    text-align: justify;
+    width: 50%;
     font-size: 16px;
     color: black;
     margin-top: 5%;
+    margin-left: 5%;
 }
 
 .node-text-number {

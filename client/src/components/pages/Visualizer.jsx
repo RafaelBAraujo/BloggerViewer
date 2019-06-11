@@ -19,7 +19,7 @@ class Visualizer extends Component {
 
     getPostData = () => {
         console.log('fetching data...')
-        fetch('/visualizer/getLastPost')
+        fetch('/visualizer/'+ this.props.blog +'/getLastPost')
         .then(res => res.json())
         .then(data => this.setState({ data }))
     }
@@ -27,7 +27,7 @@ class Visualizer extends Component {
     getPost = (postId) => {
         this.setState({ data: {} })
         console.log('fetching data...')
-        fetch('/visualizer/getPost/' + postId)
+        fetch('/visualizer/'+ this.props.blog +'/getPost/' + postId)
         .then(res => res.json())
         .then(data => this.setState({ data }))
     }

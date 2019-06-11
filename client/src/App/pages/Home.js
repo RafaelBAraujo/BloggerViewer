@@ -10,15 +10,15 @@ class Home extends Component {
     
         <h1 className="welcome-text">Welcoming Text!</h1>
 
-        <Link to={'./visualizer'}>
+        <Link to={'./visualizer/adm_tec'}>
             <button className="blog" >Administração - TEC</button>
         </Link>
 
-        <Link to={''}>
+        <Link to={'./visualizer/adm_si'}>
             <button className="blog" >Administração - SI</button>
         </Link>
 
-        <Link to={''}>
+        <Link to={'./visualizer/tgs'}>
             <button className="blog" >Teoria Geral de Sistemas</button>
         </Link>
 

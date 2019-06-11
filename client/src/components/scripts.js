@@ -50,13 +50,22 @@ export const highlight = async (keywords) => {
         let instance = new Mark(context)
         instance.unmark(options)
         context.parentElement.parentElement.style.zIndex = '0'
+        context.parentElement.parentElement.style.height = 'auto'
+        context.parentElement.parentElement.style.opacity = '1'
         if(keywords !== '') {
             await instance.mark(keywords, options)
             let marks = context.querySelectorAll('mark')
     
             if(marks.length === 0) {
-                context.parentElement.parentElement.style.zIndex = '-10'
+                if((!context.parentElement.classList.contains('response')) && context.parentElement.parentElement.style.opacity !== '0') {
+                    context.parentElement.parentElement.style.height = '0px'
+                    context.parentElement.parentElement.style.zIndex = '-10'
+                    context.parentElement.parentElement.style.opacity = '0'
+                }
+            } else {
+
             }
+
         }
 
 
@@ -64,8 +73,10 @@ export const highlight = async (keywords) => {
     
 }
 
-export const rotateIcon = () =>{
+export const rotateIcon = () => {
+
     event.target.lastElementChild.classList.toggle('rotate')
+
 }
 
 

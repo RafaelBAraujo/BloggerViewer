@@ -1,20 +1,25 @@
 const html2text = require('html2plaintext')
 const env = require('custom-env').env('staging')
-const express = require('express');
-const path = require('path');
+const express = require('express')
+const path = require('path')
 
 const BloggerRequestApi = require('./lib/blogger-request')
 
 const app = express();
 
 const hostname = process.env.HOSTNAME
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5000
 
 app.use(express.static(path.join(__dirname, 'client/build')));
 
+const blogs = {}
+blogs['adm_tec'] = 'https://adm-tecnic.blogspot.com/'
+blogs['adm_si'] = 'https://adm-bsi.blogspot.com'
+blogs['tgs'] = 'https://tgs-bsi.blogspot.com/'
+
 function shortenName(name) {
 
-	var names = name.split(' ');
+	var names = name.split(' ')
 
 	if(names.length > 1)
 		return names[0] + ' ' + names[1].substring(0, 1) + '.'
@@ -27,7 +32,9 @@ function shortenName(name) {
 
 }
 
-app.get('/visualizer/getLastPost', (req, res) => {
+app.get('/visualizer/:blog/getLastPost', (req, res) => {
+
+    let blogUrl = blogs[req.params.blog]
 
     let viewedComments = new Set()
     let numOfComments = []
@@ -38,7 +45,7 @@ app.get('/visualizer/getLastPost', (req, res) => {
                            { id: 'inactives', title: 'Inativos', content: [] } ]
     let classroom = { authors: [], classroomViews: [] }
 
-    BloggerRequestApi.getBlogId('https://tgs-bsi.blogspot.com').then((blogId) => {
+    BloggerRequestApi.getBlogId(blogUrl).then((blogId) => {
       BloggerRequestApi.getLastPost(blogId).then((lastPost) => {
             let postData = { id: lastPost.id, title: lastPost.title, content: html2text(lastPost.content), comments: [] }
             BloggerRequestApi.getCommentsByPost(blogId, lastPost.id).then((comments) => {
@@ -159,8 +166,9 @@ app.get('/visualizer/getLastPost', (req, res) => {
 
 })
 
-app.get('/visualizer/getPost/:id', (req, res) => {
+app.get('/visualizer/:blog/getPost/:id', (req, res) => {
 
+  let blogUrl = blogs[req.params.blog]
   let postId = req.params.id
 
   let viewedComments = new Set()
@@ -172,7 +180,7 @@ app.get('/visualizer/getPost/:id', (req, res) => {
                          { id: 'inactives', title: 'Inativos', content: [] } ]
   let classroom = { authors: [], classroomViews: [] }
 
-  BloggerRequestApi.getBlogId('https://tgs-bsi.blogspot.com').then((blogId) => {
+  BloggerRequestApi.getBlogId(blogUrl).then((blogId) => {
     BloggerRequestApi.getPostById(blogId, postId).then((fetchedPost) => {
           let postData = { id: fetchedPost.id, title: fetchedPost.title, content: html2text(fetchedPost.content), comments: [] }
           BloggerRequestApi.getCommentsByPost(blogId, fetchedPost.id).then((comments) => {
