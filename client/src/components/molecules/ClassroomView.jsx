@@ -6,13 +6,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 const ClassroomView = ({id, title, content}) => {
 
-    const nodes = [
-        { imgSrc: 'profile_pic.png', imgAlt: 'loopTest', text: 'Loop Test', value: '80'},
-        { imgSrc: 'profile_pic.png', imgAlt: 'loopTest', text: 'Loop Test', value: '80'},
-        { imgSrc: 'profile_pic.png', imgAlt: 'loopTest', text: 'Loop Test', value: '80'},
-        { imgSrc: 'profile_pic.png', imgAlt: 'loopTest', text: 'Loop Test', value: '80'}
-    ]
-
     let target = '#' + id
 
     return(
@@ -26,7 +19,7 @@ const ClassroomView = ({id, title, content}) => {
                 </div>
             </h2>
             <div id={id} className="collapse" data-parent="#accordion">
-                <NodeList nodes={nodes} />
+                <NodeList nodes={content} />
             </div>
         </div>
     )

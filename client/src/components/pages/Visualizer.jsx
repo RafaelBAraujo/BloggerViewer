@@ -19,7 +19,7 @@ class Visualizer extends Component {
 
     getPostData = () => {
         console.log('fetching data...')
-        fetch('/visualizer/12345')
+        fetch('/visualizer/getpost')
         .then(res => res.json())
         .then(data => this.setState({ data }))
     }

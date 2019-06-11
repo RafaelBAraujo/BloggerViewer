@@ -12,7 +12,7 @@ const Post = ({title, content, comments}) => {
                 <PostContent content={content} />
                 {comments.map(function(comment) {
                     return(
-                        <Comment author={comment.author} content={comment.content} responses={comment.responses} />
+                        <Comment author={comment.author} content={comment.content} replies={comment.replies} />
                     )
                 })}
             </div>
