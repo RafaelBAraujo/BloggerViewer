@@ -8,8 +8,8 @@ const MenuBar = () => {
     
     return(
         <div className="tabs">
-            <Tab name="Comments" />
-            <Tab name="Diagram" />
+            <Tab name="Comments" className={'tab active-tab'} />
+            <Tab name="Diagram" className={'tab'} />
             <SearchBar />
             <DrawerButton />
         </div>

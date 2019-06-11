@@ -49,14 +49,40 @@ export const highlight = async (keywords) => {
     contexts.forEach( async (context) => {
         let instance = new Mark(context)
         instance.unmark(options)
-        await instance.mark(keywords, options)  
+        context.parentElement.parentElement.style.zIndex = '0'
+        if(keywords !== '') {
+            await instance.mark(keywords, options)
+            let marks = context.querySelectorAll('mark')
+    
+            if(marks.length === 0) {
+                context.parentElement.parentElement.style.zIndex = '-10'
+            }
+        }
+
+
     })
     
+}
+
+export const rotateIcon = () =>{
+    event.target.lastElementChild.classList.toggle('rotate')
 }
 
 
 export const search = (input) => {
 
     highlight(input.target.value)
+
+}
+
+export const fetchPost = async (postId) => {
+
+    let res = await fetch('/visualizer/getLastPost')
+    console.log('res: ' + res)
+
+    let data = await res.json()
+    console.log('data: ' + data)
+
+    return data
 
 }

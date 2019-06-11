@@ -10,7 +10,7 @@ import 'mark.js'
 import 'bootstrap/dist/css/bootstrap.css'
 import '../../App/pages/visualizer.css'
 
-const VisualizerTemplate = ({data}) => {
+const VisualizerTemplate = ({data, action}) => {
 
     console.log('template data: ' + data)
 
@@ -18,7 +18,7 @@ const VisualizerTemplate = ({data}) => {
         <div className='visualizer'>
             <Classroom views={data.classroom}/>
             <MenuBar />
-            <Drawer postsList={data.postsList}/>
+            <Drawer postsList={data.postsList} action={action} />
             <Diagram />
             <Post title={data.post.title} content={data.post.content} comments={data.post.comments}/>
         </div>
