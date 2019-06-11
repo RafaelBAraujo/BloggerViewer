@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
 
@@ -7,7 +7,7 @@ import List from './pages/List';
 import Visualizer from '../components/pages/Visualizer';
 
 
-class App extends Component {
+class App extends PureComponent {
   render() {
     const App = () => (
       <div>

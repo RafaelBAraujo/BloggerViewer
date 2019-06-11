@@ -306,6 +306,10 @@
     justify-content: center;
 }
 
+mark {
+    background: lightcoral;
+}
+
 .profile-name { font-weight: bold; margin-top: 1%; margin-left: 2%; }
 .post-title { font-size: 1.5em; font-weight: bold; margin-top: 1.5%; margin-left: 2%; float: left; }
 

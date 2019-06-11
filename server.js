@@ -1,4 +1,4 @@
-const {google} = require('googleapis')
+const { google } = require('googleapis')
 const html2text = require('html2plaintext')
 const env = require('custom-env').env('staging')
 const express = require('express');
@@ -10,6 +10,199 @@ const hostname = process.env.HOSTNAME
 const port = process.env.PORT || 5000;
 
 app.use(express.static(path.join(__dirname, 'client/build')));
+
+const blogger = google.blogger({
+    version: 'v3',
+    auth: process.env.API_KEY
+})
+
+async function getBlogId(blogUrl) {
+
+	const getBlog = await blogger.blogs.getByUrl( { url: blogUrl } )
+
+	return getBlog.data.id
+
+}
+
+async function getLastPost(blogId) {
+
+	const getPosts = await blogger.posts.list( { blogId: blogId } )
+	const lastPostId = getPosts.data.items[2].id // gets the latest post
+
+	const getPost = await blogger.posts.get( { blogId: blogId, postId: lastPostId } )
+
+	return getPost.data
+
+}
+
+async function getPosts(blogId) {
+
+	const getPosts = await blogger.posts.list( { blogId: blogId } )
+
+	return getPosts.data.items
+
+}
+
+async function getCommentsByPost(blogId, postId) {
+
+	const getComments = await blogger.comments.list( { blogId: blogId, postId: postId, maxResults: 200 } )
+
+	return getComments.data.items
+
+}
+
+async function getPostById(blogId, postId) {
+
+	const getPost = await blogger.posts.get( { blogId: blogId, postId: postId } )
+
+	return getPost.data
+
+}
+
+function shortenName(name) {
+
+	var names = name.split(' ');
+
+	if(names.length > 1)
+		return names[0] + ' ' + names[1].substring(0, 1) + '.'
+	
+	else if(names.length > 0 && names.length < 2)
+		return names[0]
+
+	else
+		return 'Unknown'
+
+}
+
+app.get('/visualizer/getpost', (req, res) => {
+
+    let viewedComments = new Set()
+    let numOfComments = []
+    let namesSet = new Set()
+
+    let classroomViews = [ { id: 'ncomments', title: 'Número de Comentários', content: [] },
+                           { id: 'interactions', title: 'Interações', content: [] },
+                           { id: 'inactives', title: 'Inativos', content: [] } ]
+    let classroom = { authors: [], classroomViews: [] }
+
+    getBlogId('https://adm-bsi.blogspot.com').then((blogId) => {
+        getLastPost(blogId).then((lastPost) => {
+            let postData = { id: lastPost.id, title: lastPost.title, content: html2text(lastPost.content), comments: [] }
+            getCommentsByPost(blogId, lastPost.id).then((comments) => {
+
+                comments.forEach(comment => {
+
+                  if(numOfComments[comment.author.id] == null) {
+                    numOfComments[comment.author.id] = 1;
+                  } else {
+                    numOfComments[comment.author.id] += 1;
+                  }
+
+                  let replies = []
+
+                  if(!viewedComments.has(comment.id)) {
+
+                      comments.forEach((reply) => {
+                        if(typeof reply.inReplyTo !== 'undefined') {								
+                          if(reply !== comment && reply.inReplyTo.id == comment.id) {
+                              viewedComments.add(reply.id)
+                              let newReply = { 
+                                id: reply.id, 
+                                author: {
+                                  id: reply.author.id,
+                                  name: shortenName(reply.author.displayName.toString()),
+                                  pic: {
+                                    src: reply.author.image.url,
+                                    alt: reply.author.url
+                                  },
+                                },
+                                content: html2text(reply.content)
+                              }
+                              replies.push(newReply)
+                              let shortenedAuthorName = shortenName(reply.author.displayName)
+                              let newAuthor = {
+                                id: comment.author.id,
+                                pic: {
+                                  src: comment.author.image.url,
+                                  alt: comment.author.url
+                                },
+                                name: shortenedAuthorName,
+                                numComments: 0
+                              }
+                              if(!namesSet.has(shortenedAuthorName)) {
+                                classroom.authors.push(newAuthor)
+                                namesSet.add(shortenedAuthorName)
+                              }
+                          }
+                        }
+                      })
+
+                      let newComment = {
+                          id: comment.id,
+                          author: {
+                            id: comment.author.id,
+                            name: shortenName(comment.author.displayName.toString()),
+                            pic: {
+                              src: comment.author.image.url,
+                              alt: comment.author.url
+                            }
+                          },
+                          content: html2text(comment.content),
+                          replies: replies
+                      }
+
+                      let shortenedAuthorName = shortenName(comment.author.displayName)
+                      let newAuthor = {
+                        id: comment.author.id,
+                        pic: {
+                          src: comment.author.image.url,
+                          alt: comment.author.url
+                        },
+                        name: shortenedAuthorName,
+                        numComments: 0
+                      }
+                      if(!namesSet.has(shortenedAuthorName)) {
+                        namesSet.add(shortenedAuthorName)
+                        classroom.authors.push(newAuthor)
+                      }
+                      postData.comments.push(newComment)
+                      viewedComments.add(comment.id)
+
+                  }
+                })
+
+                
+                classroom.authors.forEach((author) => {
+                    author.numComments = numOfComments[author.id]
+                    author.numComments > 0 ? 
+                      classroomViews[0].content.push(author)
+                      :
+                      classroomViews[2].content.push(author)
+                    
+                })
+
+                let postsList = []
+
+                getPosts(blogId).then((posts) => {
+                  posts.forEach(post => {
+                      let newPost = { id: post.id, title: post.title }
+                      postsList.push(newPost)
+                  })
+                  let response = {
+                    classroom: classroomViews,
+                    post: postData,
+                    postsList: postsList
+                  }
+
+                  res.json(response)
+                })
+
+            })
+
+        })
+    })
+
+})
 
 app.get('/visualizer/:postId', (req, res) => {
 

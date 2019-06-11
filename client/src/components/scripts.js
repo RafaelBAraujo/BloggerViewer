@@ -42,24 +42,21 @@ var Mark = require('mark.js')
 
 const options = { "element": "mark", "className": "", "exclude": [], "separateWordSearch": true, "accuracy": "partially", "diacritics": true, "synonyms": {}, "iframes": false, "iframesTimeout": 5000, "acrossElements": false, "caseSensitive": false, "ignoreJoiners": false, "ignorePunctuation": [], "wildcards": "disabled", "each": function(node){}, "filter": function(textNode, foundTerm, totalCounter, counter){ return true; }, "noMatch": function(term){}, "done": function(counter){}, "debug": false, "log": window.console }
 
-export const search = (input) => {
+export const highlight = async (keywords) => {
 
-    let keywords = input.target.value.split(' ')
+    let contexts = document.querySelectorAll('.comment-content')
 
-    let contexts = document.getElementsByClassName('comment-content')
-
-    for(let i = 0; i < contexts.length; ++i) {
-        let context = contexts[i]
+    contexts.forEach( async (context) => {
         let instance = new Mark(context)
         instance.unmark(options)
-        instance.mark(keywords, options)
-    }
-    /*
-    contexts.forEach(context => {
-        let instance = new Mark(context)
-        instance.unmark(options)
-        instance.mark(keywords, options)
+        await instance.mark(keywords, options)  
     })
-    */
+    
 }
 
+
+export const search = (input) => {
+
+    highlight(input.target.value)
+
+}
