@@ -8,6 +8,8 @@ import Response from '../organisms/Response'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap'
 
+import CommentRibbon from '../atoms/CommentRibbon'
+
 const Comment = ({id, author, content, published, replies}) => {
 
     let collapseId = author.name.split(' ')[0] + id.substr(0,3)
@@ -15,6 +17,7 @@ const Comment = ({id, author, content, published, replies}) => {
     return (
         <div className="accordion" >
             <div className="comment shadow p-3 mb-5 bg-white rounded">
+                <CommentRibbon />
                 <CommentHeader author={author} published={published} />
                 <CommentContent content={content}/>
                 <ExpandRepliesButton id={collapseId} numOfReplies={replies.length} />

@@ -2,7 +2,7 @@ import React from 'react'
 
 const PostContent = ({content}) => {
     return(
-        <div className="comment-content">
+        <div className="post-text">
             {content}
         </div>
     )
