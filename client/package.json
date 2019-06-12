@@ -2,7 +2,8 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "@types/bootstrap": "^4.3.0",
     "bootstrap": "^4.3.1",
     "create-react-app": "^3.0.1",
@@ -15,7 +16,6 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "^0.9.5"
   },
-  "devDependencies": {},
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
