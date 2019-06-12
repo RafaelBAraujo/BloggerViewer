@@ -4,12 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "cd ./client && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    
+  },
+  "devDependencies": {
     "custom-env": "^1.0.2",
     "express": "^4.17.1",
     "googleapis": "^40.0.0",
