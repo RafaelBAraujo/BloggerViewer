@@ -73,6 +73,49 @@ export const highlight = async (keywords) => {
     
 }
 
+export const filterCommentsByAuthor = (authorName) => {
+
+    let comments = document.querySelectorAll('.comment-header')
+
+    // show all
+    comments.forEach((comment) => {
+        if(comment.parentElement.parentElement.style.opacity === '0') {
+            comment.parentElement.parentElement.style.height = 'auto'
+            comment.parentElement.parentElement.style.zIndex = '0'
+            comment.parentElement.parentElement.style.opacity = '1'
+        }
+    })
+
+    // hide specific
+    comments.forEach((comment) => {
+        if(comment.querySelector('.profile-name p').innerHTML !== authorName) {
+            if((!comment.parentElement.classList.contains('response')) && comment.parentElement.parentElement.style.opacity !== '0') {
+                comment.parentElement.parentElement.style.height = '0px'
+                comment.parentElement.parentElement.style.zIndex = '-10'
+                comment.parentElement.parentElement.style.opacity = '0'
+            }
+        }
+    })
+
+}
+
+export const cleanFilter = () => {
+
+    let comments = document.querySelectorAll('.comment-header')
+
+    // show all
+    comments.forEach((comment) => {
+        if(comment.parentElement.parentElement.style.opacity === '0') {
+            comment.parentElement.parentElement.style.height = 'auto'
+            comment.parentElement.parentElement.style.zIndex = '0'
+            comment.parentElement.parentElement.style.opacity = '1'
+        }
+    })
+
+    event.target.lastElementChild.classList.toggle('hide-filtersign')
+
+}
+
 export const rotateIcon = () => {
 
     event.target.lastElementChild.classList.toggle('rotate')

@@ -137,10 +137,13 @@ app.get('/visualizer/:blog/getLastPost', (req, res) => {
                 classroom.authors.forEach((author) => {
                     author.numComments = numOfComments[author.id]
                     author.numComments > 0 ? 
-                      classroomViews[0].content.push(author)
-                      :
-                      classroomViews[2].content.push(author)
+                    (classroomViews[0].content.push(author))
+                    :
+                    (classroomViews[2].content.push(author))
                     
+                    if(author.numComments > 1) {
+                      classroomViews[1].content.push(author)
+                    }
                 })
 
                 let postsList = []
