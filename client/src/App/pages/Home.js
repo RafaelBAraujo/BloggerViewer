@@ -8,19 +8,21 @@ class Home extends Component {
     return (
     <div className="App">
     
-        <h1 className="welcome-text">Welcoming Text!</h1>
+        <h1 className="welcome-text">Sala de Aula 360 Graus</h1>
 
-        <Link to={'./visualizer'}>
-            <button className="blog" >Administração - TEC</button>
-        </Link>
+        <div className="blog-links">
+          <Link to={'./visualizer/adm_tec'}>
+              <button className="blog" >Administração - TEC</button>
+          </Link>
 
-        <Link to={''}>
-            <button className="blog" >Administração - SI</button>
-        </Link>
+          <Link to={'./visualizer/adm_si'}>
+              <button className="blog" >Administração - SI</button>
+          </Link>
 
-        <Link to={''}>
-            <button className="blog" >Teoria Geral de Sistemas</button>
-        </Link>
+          <Link to={'./visualizer/tgs'}>
+              <button className="blog" >Teoria Geral de Sistemas</button>
+          </Link>
+        </div>
 
     </div>
     );

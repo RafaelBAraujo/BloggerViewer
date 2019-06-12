@@ -2,19 +2,33 @@ import React from 'react'
 
 import CommentHeader from '../molecules/CommentHeader'
 import CommentContent from '../atoms/CommentContent'
+import ExpandRepliesButton from '../atoms/ExpandRepliesButton'
 import Response from '../organisms/Response'
 
-const Comment = ({author, content, responses}) => {
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/js/bootstrap'
+
+import CommentRibbon from '../atoms/CommentRibbon'
+
+const Comment = ({id, author, content, published, replies}) => {
+
+    let collapseId = author.name.split(' ')[0] + id.substr(0,3)
 
     return (
-        <div className="comment shadow p-3 mb-5 bg-white rounded">
-            <CommentHeader author={author}/>
-            <CommentContent content={content}/>
-            {responses.map(function(response) {
-                return(
-                    <Response key={response.id} author={response.author} content={response.content} />
-                )
-            })}
+        <div className="accordion" >
+            <div className="comment shadow p-3 mb-5 bg-white rounded">
+                <CommentRibbon />
+                <CommentHeader author={author} published={published} />
+                <CommentContent content={content}/>
+                <ExpandRepliesButton id={collapseId} numOfReplies={replies.length} />
+                <div id={collapseId} className="collapse" data-parent="#accordion">
+                    {replies.map(function(reply) {
+                        return(
+                            <Response key={reply.id} author={reply.author} content={reply.content} />
+                        )
+                    })}
+                </div>
+            </div>
         </div>
     )
 

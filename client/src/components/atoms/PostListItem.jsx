@@ -1,10 +1,10 @@
 import React from 'react'
 
-const PostListItem = ({postTitle}) => {
+const PostListItem = ({postId, postTitle, action}) => {
     return (
-        <a className="post">
+        <span className="post" onClick={() => action(postId)}>
             {postTitle}
-        </a>
+        </span>
     )
 }
 

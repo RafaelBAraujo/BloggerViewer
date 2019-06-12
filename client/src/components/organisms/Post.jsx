@@ -5,6 +5,7 @@ import PostContent from '../atoms/PostContent'
 import Comment from '../organisms/Comment'
 
 const Post = ({title, content, comments}) => {
+
     return(
         <div id="comments" className="comments">
             <div className="post-content shadow p-3 mb-5 rounded">
@@ -12,7 +13,7 @@ const Post = ({title, content, comments}) => {
                 <PostContent content={content} />
                 {comments.map(function(comment) {
                     return(
-                        <Comment author={comment.author} content={comment.content} responses={comment.responses} />
+                        <Comment key={comment.id} id={comment.id} author={comment.author} content={comment.content} published={comment.published} replies={comment.replies} />
                     )
                 })}
             </div>
