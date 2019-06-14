@@ -8,7 +8,7 @@ import Post from '../../components/organisms/Post'
 
 import 'mark.js'
 import 'bootstrap/dist/css/bootstrap.css'
-import '../../App/pages/visualizer.css'
+import '../../stylesheets/visualizer.css'
 
 const VisualizerTemplate = ({data, action}) => {
 

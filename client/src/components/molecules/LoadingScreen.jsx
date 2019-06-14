@@ -1,6 +1,6 @@
 import React from 'react'
 
-import '../../lds-spinner.css'
+import '../../stylesheets/lds-spinner.css'
 
 const LoaderScreen = () => {
     return(

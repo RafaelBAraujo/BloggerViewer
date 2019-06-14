@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
-import './home.css';
+import '../../stylesheets/home.css'
 
 class Home extends Component {
   render() {
