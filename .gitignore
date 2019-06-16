@@ -5,3 +5,5 @@ doc/
 .env.*
 .env
 *.log
+
+serviceAccountKey.json
