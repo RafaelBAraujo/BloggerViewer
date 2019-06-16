@@ -10,12 +10,11 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    
-  },
+  "dependencies": {},
   "devDependencies": {
     "custom-env": "^1.0.2",
     "express": "^4.17.1",
+    "firebase-admin": "^8.1.0",
     "googleapis": "^40.0.0",
     "html2plaintext": "^2.1.2"
   }
