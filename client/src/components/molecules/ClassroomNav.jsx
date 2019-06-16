@@ -7,7 +7,7 @@ import 'bootstrap/dist/js/bootstrap'
 
 const ClassroomNav = ({views}) => {
     
-    return(
+    return (
         <div className="classroom accordion" id="accordion">
             {views.map(function(view) {
                 return (
