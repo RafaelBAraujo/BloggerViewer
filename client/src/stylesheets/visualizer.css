@@ -35,7 +35,7 @@
     /*grid settings*/
     display: grid;
     grid-template-columns: 16% 84%;
-    grid-template-rows: 10vh 90vh;
+    grid-template-rows: 7vh 93vh;
 
     /*page settings*/
     overflow-y: hidden;
@@ -394,6 +394,25 @@ mark {
     margin-left: auto;
     color: white;
     background-color: var(--primary-color-dark)
+}
+
+.dropzone-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.dropzone-wrapper button {
+    height: 5%;
+}
+
+.dropzone {
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    border-style: dashed;
+    width: 25%;
+    padding: 5%;
+    margin: 5%;
 }
 
 .profile-name { font-weight: bold; margin-top: 1%; margin-left: 2%; }

@@ -7,8 +7,8 @@ import CommentPublished from '../atoms/CommentPublished'
 const CommentHeader = ({author, published}) => {
     return(
         <div className="comment-header">
-            <CommentPicture src={author.pic.src} alt={author.pic.alt} />
-            <CommentAuthor authorName={author.name} />
+            <CommentPicture src={author.image.url} alt={author.url} />
+            <CommentAuthor authorName={author.displayName} />
             <CommentPublished published={published} />
         </div>
     )

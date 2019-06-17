@@ -9,7 +9,7 @@ const Drawer = ({postsList, action}) => {
         <div id="mySidenav" className="sidenav">
             <CloseDrawerButton />
             {postsList.map(function(post) {
-                return(
+                return (
                     <PostListItem key={post.id} postId={post.id} postTitle={post.title} action={action} />
                 )
             })}

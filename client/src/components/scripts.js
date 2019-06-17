@@ -1,3 +1,5 @@
+import Axios from 'axios';
+
 export const expandDrawer = () => {
     document.getElementById("mySidenav").style.width = "34%"
 }
@@ -8,19 +10,19 @@ export const closeDrawer = () => {
 
 export const switchTab = (tab) => {
     
-    let tabId = tab.target.id;
-    console.log(tabId);
+    let tabId = tab.target.id
+    console.log(tabId)
 
-    if(tabId === "DiagramTab") {
-        document.getElementById(tabId).className = "tab active-tab";
-        document.getElementById("CommentsTab").className = "tab";
-        switchView("diagram");
+    if(tabId === "ClassroomTab") {
+        document.getElementById(tabId).className = "tab active-tab"
+        document.getElementById("CommentsTab").className = "tab"
+        switchView("diagram")
     }
 
     else {
-        document.getElementById(tabId).className = "tab active-tab";
-        document.getElementById("DiagramTab").className = "tab";
-        switchView("comments");
+        document.getElementById(tabId).className = "tab active-tab"
+        document.getElementById("ClassroomTab").className = "tab"
+        switchView("comments")
     }
 
 }
@@ -138,5 +140,23 @@ export const fetchPost = async (postId) => {
     console.log('data: ' + data)
 
     return data
+
+}
+
+import axios from 'axios'
+
+export const uploadFile = async (file) => {
+
+    const data = new FormData()
+    console.log(file.name)
+    console.log(file.path)
+    // data.append('file', file, file.name)
+
+    // Axios.toString()
+    // axios.post("http://localhost:5000/upload", data, { // receive two parameter endpoint url ,form data 
+    //   })
+    //   .then(res => { // then print response status
+    //     console.log(res.statusText)
+    // })
 
 }

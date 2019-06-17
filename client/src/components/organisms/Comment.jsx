@@ -10,7 +10,7 @@ import 'bootstrap/dist/js/bootstrap'
 
 const Comment = ({id, author, content, published, replies}) => {
 
-    let collapseId = author.name.split(' ')[0] + id.substr(0,3)
+    let collapseId = author.displayName.split(' ')[0] + id.substr(0,3)
 
     return (
         <div className="accordion" >
@@ -21,7 +21,7 @@ const Comment = ({id, author, content, published, replies}) => {
                 <div id={collapseId} className="collapse" data-parent="#accordion">
                     {replies.map(function(reply) {
                         return(
-                            <Response key={reply.id} author={reply.author} content={reply.content} />
+                            <Response key={reply.id} author={reply.author} content={reply.content} published={reply.published} />
                         )
                     })}
                 </div>
