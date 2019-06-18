@@ -150,13 +150,13 @@ export const uploadFile = async (file) => {
     const data = new FormData()
     console.log(file.name)
     console.log(file.path)
-    // data.append('file', file, file.name)
+    data.append('file', file, 'btn_teste.jpg')
 
-    // Axios.toString()
-    // axios.post("http://localhost:5000/upload", data, { // receive two parameter endpoint url ,form data 
-    //   })
-    //   .then(res => { // then print response status
-    //     console.log(res.statusText)
-    // })
+     Axios.toString()
+     axios.post("http://localhost:5000/upload", data, { // receive two parameter endpoint url ,form data 
+       })
+       .then(res => { // then print response status
+         console.log(res.statusText)
+     })
 
 }
