@@ -150,6 +150,7 @@ export const uploadFile = async (file) => {
     const data = new FormData()
     console.log(file.name)
     console.log(file.path)
+
     data.append('file', file, file.name)
 
     Axios.toString()
@@ -158,5 +159,6 @@ export const uploadFile = async (file) => {
       .then(res => { // then print response status
         console.log(res.statusText)
     })
+
 
 }

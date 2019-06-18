@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
 import Dropzone from 'react-dropzone'
+import Button from '../atoms/Button'
+import Picklist from '../atoms/Picklist'
 
 import { uploadFile } from '../scripts'
 
@@ -23,15 +25,16 @@ class Diagram extends Component {
     render() {
 
         let file = this.state.file
+        let items = []
+
 
         return(
             <div id="diagram" className="diagram">
+                <Picklist label={'bla'} items={items} />
                 <Dropzone onDrop={this.onDrop} noClick={true} noKeyboard={true} multiple={false} >
                     {({getRootProps, getInputProps, open}) => (
                     <div className="dropzone-wrapper">
-                        <button type="button" className="btn btn-secondary" onClick={() => uploadFile(file)} >
-                            Upload the damn file
-                        </button>
+                        <Button label={'Upload file'} onClick={() => uploadFile(file)} />
                         <div {...getRootProps({className: 'dropzone'})}>
                             <input {...getInputProps()} />
                             <p>Drag 'n' drop some files here</p>
