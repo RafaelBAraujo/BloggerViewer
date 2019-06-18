@@ -8,7 +8,8 @@ class Visualizer extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            data: {}
+            data: {},
+            classFile: null
         }
     }
 
@@ -22,6 +23,10 @@ class Visualizer extends Component {
         fetch('/visualizer/'+ this.props.blog +'/getLastPost')
         .then(res => res.json())
         .then(data => this.setState({ data }))
+
+        fetch('/getClassSpreadsheet/serviceAccountKey.json')
+        .then(classFile => this.setState({ classFile }))
+        .then(() => console.log('got this file: ' + this.state.classFile.body))
     }
 
     getPost = (postId) => {
