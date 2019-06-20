@@ -30,11 +30,11 @@ class Diagram extends Component {
 
         return(
             <div id="diagram" className="diagram">
-                <Picklist label={'bla'} items={items} />
+                
                 <Dropzone onDrop={this.onDrop} noClick={true} noKeyboard={true} multiple={false} >
                     {({getRootProps, getInputProps, open}) => (
                     <div className="dropzone-wrapper">
-                        <Button label={'Upload file'} onClick={() => uploadFile(file)} />
+                        <Button label={'Upload file'} onClick={() => uploadFile(file, this.props.postId)} />
                         <div {...getRootProps({className: 'dropzone'})}>
                             <input {...getInputProps()} />
                             <p>Drag 'n' drop some files here</p>

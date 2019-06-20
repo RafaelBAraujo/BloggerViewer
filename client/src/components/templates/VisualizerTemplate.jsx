@@ -19,7 +19,7 @@ const VisualizerTemplate = ({data, action}) => {
             <Classroom views={data.classroom}/>
             <MenuBar />
             <Drawer postsList={data.postList} action={action} />
-            <Diagram />
+            <Diagram postId={data.post.id} />
             <Post title={data.post.title} content={data.post.content} comments={data.post.comments}/>
         </div>
     )

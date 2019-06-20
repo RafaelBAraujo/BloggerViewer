@@ -145,13 +145,13 @@ export const fetchPost = async (postId) => {
 
 import axios from 'axios'
 
-export const uploadFile = async (file) => {
+export const uploadFile = async (file, fileName) => {
 
     const data = new FormData()
     console.log(file.name)
     console.log(file.path)
 
-    data.append('file', file, file.name)
+    data.append('file', file, fileName)
 
     Axios.toString()
     axios.post("http://localhost:5000/upload", data, { // receive two parameter endpoint url ,form data 
