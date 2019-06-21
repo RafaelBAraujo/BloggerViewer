@@ -162,3 +162,16 @@ export const uploadFile = async (file, fileName) => {
 
 
 }
+
+export const uploadClass = async (data) => {
+
+    fetch('http://localhost:5000/uploadClass', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: data
+    })
+
+}

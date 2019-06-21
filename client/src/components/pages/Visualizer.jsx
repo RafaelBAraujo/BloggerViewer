@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 
 import VisualizerTemplate from '../templates/VisualizerTemplate'
 import LoadingScreen from '../molecules/LoadingScreen'
+import Button from '../atoms/Button'
+
+import { uploadClass } from '../scripts'
 
 class Visualizer extends Component {
 
@@ -44,7 +47,10 @@ class Visualizer extends Component {
         return(
             <div>
                 {Object.entries(data).length !== 0 && data.constructor === Object ? (
+                        <div>
+                        <Button label={'send'} onClick={() => uploadClass(JSON.stringify(data.authors))} />
                         <VisualizerTemplate data={data} action={this.getPost} />
+                        </div>
                     ) : (
                         <LoadingScreen />
                 )
