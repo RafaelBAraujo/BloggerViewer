@@ -331,9 +331,17 @@
 }
 
 .closebtn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.0);
     cursor: pointer;
     justify-self: flex-end; 
     color: #575757;
+}
+
+.closebtn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 .profile-pic { 
@@ -390,10 +398,44 @@ mark {
 
 .filtersign {
     margin-top: 0%;
-    width: 10%;
-    margin-left: auto;
+    height: auto;
+    margin-right: auto;
+    margin-left: 4%;
+    padding: .5%;
     color: white;
-    background-color: var(--primary-color-dark)
+    background-color: var(--primary-color-dark);
+    width: auto;
+
+    position: fixed;
+    z-index: 2;
+}
+
+.hide-filtersign {
+    transition: 150ms ease-out;
+    opacity: 0;
+    z-index: -1;
+}
+
+.filtersign-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* .filtersign-content button {
+    
+} */
+
+.filtersign-element {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-right: 5%;
+}
+
+.filtersign-element i {
+    margin-top: .9%;
 }
 
 .dropzone-wrapper {

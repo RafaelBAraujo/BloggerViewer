@@ -10,7 +10,7 @@ const NodeList = ({nodes}) => {
         <div className="node-list">
             {nodes.map(function(node){
                 return (
-                    <Node key={++replyKeyCounter} imgSrc={node.pic.src} imgAlt={node.pic.alt} text={node.name} value={node.numComments} />
+                    <Node key={++replyKeyCounter} imgSrc={node.image.url} imgAlt={node.url} text={node.displayName} value={node.numComments} />
                 )
             })}
         </div>

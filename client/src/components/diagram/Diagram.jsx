@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import Dropzone from 'react-dropzone'
 import Button from '../atoms/Button'
-import Picklist from '../atoms/Picklist'
 
 import { uploadFile } from '../scripts'
 
@@ -25,7 +24,6 @@ class Diagram extends Component {
     render() {
 
         let file = this.state.file
-        let items = []
 
 
         return(

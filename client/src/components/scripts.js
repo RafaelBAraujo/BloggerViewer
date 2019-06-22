@@ -11,7 +11,6 @@ export const closeDrawer = () => {
 export const switchTab = (tab) => {
     
     let tabId = tab.target.id
-    console.log(tabId)
 
     if(tabId === "ClassroomTab") {
         document.getElementById(tabId).className = "tab active-tab"
@@ -75,7 +74,27 @@ export const highlight = async (keywords) => {
     
 }
 
-export const filterCommentsByAuthor = (authorName) => {
+const showFilter = (element) => {
+
+    let filter = document.getElementsByClassName('filtersign')[0]
+
+    filter.querySelectorAll('.filter-element')[0].innerHTML = element
+
+    if(filter.classList.contains('hide-filtersign'))
+        filter.classList.toggle('hide-filtersign')
+
+}
+
+const hideFilter = () => {
+
+    let filter = document.getElementsByClassName('filtersign')[0]
+
+    if(!filter.classList.contains('hide-filtersign'))
+        filter.classList.toggle('hide-filtersign')
+
+}
+
+export const clearMarks = () => {
 
     let comments = document.querySelectorAll('.comment-header')
 
@@ -87,6 +106,22 @@ export const filterCommentsByAuthor = (authorName) => {
             comment.parentElement.parentElement.style.opacity = '1'
         }
     })
+
+}
+
+export const cleanFilter = () => {
+
+    clearMarks()
+
+    hideFilter()
+
+}
+
+export const filterCommentsByAuthor = (authorName) => {
+
+    let comments = document.querySelectorAll('.comment-header')
+
+    clearMarks()
 
     // hide specific
     comments.forEach((comment) => {
@@ -99,22 +134,7 @@ export const filterCommentsByAuthor = (authorName) => {
         }
     })
 
-}
-
-export const cleanFilter = () => {
-
-    let comments = document.querySelectorAll('.comment-header')
-
-    // show all
-    comments.forEach((comment) => {
-        if(comment.parentElement.parentElement.style.opacity === '0') {
-            comment.parentElement.parentElement.style.height = 'auto'
-            comment.parentElement.parentElement.style.zIndex = '0'
-            comment.parentElement.parentElement.style.opacity = '1'
-        }
-    })
-
-    event.target.lastElementChild.classList.toggle('hide-filtersign')
+    showFilter(authorName)
 
 }
 

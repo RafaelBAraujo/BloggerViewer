@@ -2,24 +2,22 @@ import React, { Component } from 'react'
 
 import VisualizerTemplate from '../templates/VisualizerTemplate'
 import LoadingScreen from '../molecules/LoadingScreen'
-import Button from '../atoms/Button'
+// import Button from '../atoms/Button'
 
-import { uploadClass } from '../scripts'
+// import { uploadClass } from '../scripts'
 
 class Visualizer extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            data: {},
-            classData: {}
+            data: {}
         }
     }
 
     componentDidMount() {
         console.log('mounted')
         this.getPostData()
-        this.getClassData()
     }
 
     getPostData = () => {
@@ -38,6 +36,7 @@ class Visualizer extends Component {
     }
 
     getClassData = (postId) => {
+        console.log('postId: ' + postId)
         fetch('/getClass/' + postId)
         .then(res => res.json())
         .then((classData) => this.setState({ classData }))
@@ -47,12 +46,11 @@ class Visualizer extends Component {
     render() {
 
         const { data } = this.state
-        const { classData } = this.state
-
+        
         return(
             <div>
                 {Object.entries(data).length !== 0 && data.constructor === Object ? (
-                        <VisualizerTemplate data={data} classData={classData} action={this.getPost} />
+                        <VisualizerTemplate data={data} classData={data.classroom} action={this.getPost} />
                     ) : (
                         <LoadingScreen />
                 )

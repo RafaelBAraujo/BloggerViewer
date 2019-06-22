@@ -16,7 +16,7 @@ const VisualizerTemplate = ({data, action}) => {
 
     return(
         <div className='visualizer'>
-            <Classroom views={data.classroom}/>
+            <Classroom views={data.classroomViews}/>
             <MenuBar />
             <Drawer postsList={data.postList} action={action} />
             <Diagram postId={data.post.id} />
