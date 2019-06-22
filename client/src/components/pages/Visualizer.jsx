@@ -12,13 +12,14 @@ class Visualizer extends Component {
         super(props)
         this.state = {
             data: {},
-            classFile: null
+            classData: {}
         }
     }
 
     componentDidMount() {
         console.log('mounted')
         this.getPostData()
+        this.getClassData()
     }
 
     getPostData = () => {
@@ -26,10 +27,6 @@ class Visualizer extends Component {
         fetch('/visualizer/'+ this.props.blog +'/getLastPost')
         .then(res => res.json())
         .then(data => this.setState({ data }))
-
-        fetch('/getClassSpreadsheet/serviceAccountKey.json')
-        .then(classFile => this.setState({ classFile }))
-        .then(() => console.log('got this file: ' + this.state.classFile.body))
     }
 
     getPost = (postId) => {
@@ -40,17 +37,22 @@ class Visualizer extends Component {
         .then(data => this.setState({ data }))
     }
 
+    getClassData = (postId) => {
+        fetch('/getClass/' + postId)
+        .then(res => res.json())
+        .then((classData) => this.setState({ classData }))
+        .then(() => console.log('I\'ve got: ' + this.state.classData))
+    }
+
     render() {
 
         const { data } = this.state
+        const { classData } = this.state
 
         return(
             <div>
                 {Object.entries(data).length !== 0 && data.constructor === Object ? (
-                        <div>
-                        <Button label={'send'} onClick={() => uploadClass(JSON.stringify(data.authors))} />
-                        <VisualizerTemplate data={data} action={this.getPost} />
-                        </div>
+                        <VisualizerTemplate data={data} classData={classData} action={this.getPost} />
                     ) : (
                         <LoadingScreen />
                 )
