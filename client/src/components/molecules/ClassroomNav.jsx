@@ -7,11 +7,11 @@ import 'bootstrap/dist/js/bootstrap'
 
 const ClassroomNav = ({views}) => {
     
-    return(
+    return (
         <div className="classroom accordion" id="accordion">
             {views.map(function(view) {
                 return (
-                    <ClassroomView title={view.title} content={view.content} id={view.id} />
+                    <ClassroomView key={view.id} title={view.title} content={view.content} id={view.id} />
                 )
             })}
         </div>

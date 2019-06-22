@@ -1,9 +1,9 @@
-
+node_modules/
 private/
+public/
 doc/
 
 .env.*
 .env
 *.log
 serviceAccountKey.json
-node_modules/

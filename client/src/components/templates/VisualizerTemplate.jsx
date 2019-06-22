@@ -8,18 +8,18 @@ import Post from '../../components/organisms/Post'
 
 import 'mark.js'
 import 'bootstrap/dist/css/bootstrap.css'
-import '../../App/pages/visualizer.css'
+import '../../stylesheets/visualizer.css'
 
-const VisualizerTemplate = ({data}) => {
+const VisualizerTemplate = ({data, action}) => {
 
     console.log('template data: ' + data)
 
     return(
         <div className='visualizer'>
-            <Classroom views={null}/>
+            <Classroom views={data.classroomViews}/>
             <MenuBar />
-            <Drawer postsList={data.postsList}/>
-            <Diagram />
+            <Drawer postsList={data.postList} action={action} />
+            <Diagram postId={data.post.id} />
             <Post title={data.post.title} content={data.post.content} comments={data.post.comments}/>
         </div>
     )

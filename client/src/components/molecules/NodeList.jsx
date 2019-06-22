@@ -3,11 +3,14 @@ import React from 'react'
 import Node from './Node'
 
 const NodeList = ({nodes}) => {
+
+    let replyKeyCounter = 0
+
     return(
         <div className="node-list">
             {nodes.map(function(node){
                 return (
-                    <Node imgSrc={node.imgSrc} imgAlt={node.imgAlt} text={node.text} value={node.value} />
+                    <Node key={++replyKeyCounter} imgSrc={node.image.url} imgAlt={node.url} text={node.displayName} value={node.numComments} />
                 )
             })}
         </div>
