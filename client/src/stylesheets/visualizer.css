@@ -429,6 +429,22 @@ mark {
     width: 100%;
 }
 
+.file-upload {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+}
+
+.file-upload h4 { margin-right: 15%; }
+
+.file-upload button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3%;
+}
+
 /* .filtersign-content button {
     
 } */

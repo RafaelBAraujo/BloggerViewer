@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Picklist from '../atoms/Picklist'
-import FileInput from '../atoms/FileInput'
+import FileInput from '../molecules/FileInput'
 
 const Diagram = ({uploadFileAction}) => {
 
@@ -14,4 +14,4 @@ const Diagram = ({uploadFileAction}) => {
 
 }
 
-export default Diagram;
+export default Diagram
