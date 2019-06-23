@@ -1,21 +1,19 @@
 import React from 'react'
+ 
+import { Form } from 'react-bootstrap'
 
-import DropdownButton from 'react-bootstrap'
-import Dropdown from 'react-bootstrap'
-
-const Picklist = ({label, items}) => {
-
-    let itemCounter = 0
+const Picklist = ({items}) => {
 
     return (
-        <DropdownButton id="dropdown-basic-button" title="Dropdown button">
+        <Form.Control as="select">
             {items.map(item => {
                 return (
-                    
-                    <Dropdown.Item eventKey={itemCounter++}>{item}</Dropdown.Item>
+                    <option key={item} >
+                        {item}
+                    </option>
                 )
             })}
-        </DropdownButton>
+        </Form.Control>
     )
 
 }

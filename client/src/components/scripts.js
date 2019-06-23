@@ -8,35 +8,31 @@ export const closeDrawer = () => {
     document.getElementById("mySidenav").style.width = "0";
 }
 
+function switchView() {
+
+    document.getElementById("comments").classList.toggle('hide-view')
+    document.getElementById("diagram").classList.toggle('hide-view')
+    
+}
+
 export const switchTab = (tab) => {
     
     let tabId = tab.target.id
 
     if(tabId === "ClassroomTab") {
-        document.getElementById(tabId).className = "tab active-tab"
-        document.getElementById("CommentsTab").className = "tab"
-        switchView("diagram")
+
+        document.getElementById(tabId).classList.toggle('active-tab')
+        document.getElementById("CommentsTab").classList.toggle('active-tab')
+
+    } else {
+
+        document.getElementById(tabId).classList.toggle('active-tab')
+        document.getElementById("ClassroomTab").classList.toggle('active-tab')
+
     }
 
-    else {
-        document.getElementById(tabId).className = "tab active-tab"
-        document.getElementById("ClassroomTab").className = "tab"
-        switchView("comments")
-    }
+    switchView()
 
-}
-
-function switchView(view) {
-    
-    if(view === "comments") {
-        document.getElementById("comments").style.display = "block";
-        document.getElementById("diagram").style.display = "none";
-    }
-    else if(view === "diagram") {
-        document.getElementById("comments").style.display = "none";
-        document.getElementById("diagram").style.display = "block";
-    }
-    
 }
 
 var Mark = require('mark.js')
@@ -147,7 +143,7 @@ export const filterCommentsByAuthor = (authorName) => {
                 }
             }
         }
-        
+
     })
 
     showFilter(authorName)
@@ -159,7 +155,6 @@ export const rotateIcon = () => {
     event.target.lastElementChild.classList.toggle('rotate')
 
 }
-
 
 export const search = (input) => {
 
@@ -184,18 +179,14 @@ import axios from 'axios'
 export const uploadFile = async (file, fileName) => {
 
     const data = new FormData()
-    console.log(file.name)
-    console.log(file.path)
 
     data.append('file', file, fileName)
 
     Axios.toString()
-    axios.post("http://localhost:5000/upload", data, { // receive two parameter endpoint url ,form data 
-      })
-      .then(res => { // then print response status
-        console.log(res.statusText)
-    })
 
+    let res = await axios.post("http://localhost:5000/upload", data, {})
+
+    return res
 
 }
 

@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 
 import VisualizerTemplate from '../templates/VisualizerTemplate'
 import LoadingScreen from '../molecules/LoadingScreen'
-// import Button from '../atoms/Button'
 
-// import { uploadClass } from '../scripts'
+import { uploadFile } from '../scripts'
 
 class Visualizer extends Component {
 
@@ -43,6 +42,16 @@ class Visualizer extends Component {
         .then(() => console.log('I\'ve got: ' + this.state.classData))
     }
 
+    uploadClassFile = (file) => {
+        uploadFile(file, this.state.data.post.id)
+        .then((res) => {
+            if(res.statusText === 'OK') {
+                this.setState({ data: {} })
+                this.getPostData()
+            }
+        })
+    }
+
     render() {
 
         const { data } = this.state
@@ -50,7 +59,7 @@ class Visualizer extends Component {
         return(
             <div>
                 {Object.entries(data).length !== 0 && data.constructor === Object ? (
-                        <VisualizerTemplate data={data} classData={data.classroom} action={this.getPost} />
+                        <VisualizerTemplate data={data} classData={data.classroom} action={this.getPost} uploadFileAction={this.uploadClassFile} />
                     ) : (
                         <LoadingScreen />
                 )

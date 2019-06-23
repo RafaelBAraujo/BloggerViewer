@@ -139,6 +139,12 @@
     margin-left: auto;
 }
 
+.hide-view {
+    display: none;
+    z-index: -5;
+    opacity: 0;
+}
+
 .comments {
     display: flex;
     flex-flow: column;

@@ -1,51 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import Dropzone from 'react-dropzone'
-import Button from '../atoms/Button'
+import Picklist from '../atoms/Picklist'
+import FileInput from '../atoms/FileInput'
 
-import { uploadFile } from '../scripts'
+const Diagram = ({uploadFileAction}) => {
 
-class Diagram extends Component {
+    return(
+        <div id="diagram" className="diagram hide-view">
+            <Picklist items={['julia', 'lennon']}/>
+            <FileInput action={uploadFileAction} />
+        </div>
+    )
 
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            file: null
-        }
-        
-        this.onDrop = (files) => {
-            this.setState({file: files[0]})
-            console.log(this.state.file)
-        }
-        
-    }
-    
-    render() {
-
-        let file = this.state.file
-
-
-        return(
-            <div id="diagram" className="diagram">
-                
-                <Dropzone onDrop={this.onDrop} noClick={true} noKeyboard={true} multiple={false} >
-                    {({getRootProps, getInputProps, open}) => (
-                    <div className="dropzone-wrapper">
-                        <Button label={'Upload file'} onClick={() => uploadFile(file, this.props.postId)} />
-                        <div {...getRootProps({className: 'dropzone'})}>
-                            <input {...getInputProps()} />
-                            <p>Drag 'n' drop some files here</p>
-                            <button type="button" className="btn btn-secondary" onClick={open}>
-                                Open File Dialog
-                            </button>
-                        </div>
-                    </div>
-                    )}
-                </Dropzone>
-            </div>
-        )
-    }
 }
 
 export default Diagram;
