@@ -125,13 +125,29 @@ export const filterCommentsByAuthor = (authorName) => {
 
     // hide specific
     comments.forEach((comment) => {
-        if(comment.querySelector('.profile-name p').innerHTML !== authorName) {
-            if((!comment.parentElement.classList.contains('response')) && comment.parentElement.parentElement.style.opacity !== '0') {
-                comment.parentElement.parentElement.style.height = '0px'
-                comment.parentElement.parentElement.style.zIndex = '-10'
-                comment.parentElement.parentElement.style.opacity = '0'
+
+        let hasRepliesByAuthor = false
+
+        let replies = comment.parentElement.querySelectorAll('div.collapse div.response')
+
+        for(let i = 0; i < replies.length; ++i) {
+            if(replies[i].querySelector('.comment-header .profile-name p').innerHTML === authorName) {
+                hasRepliesByAuthor = true
+                break;
             }
         }
+
+
+        if(!hasRepliesByAuthor) {
+            if(comment.querySelector('.profile-name p').innerHTML !== authorName) {
+                if((!comment.parentElement.classList.contains('response')) && comment.parentElement.parentElement.style.opacity !== '0') {
+                    comment.parentElement.parentElement.style.height = '0px'
+                    comment.parentElement.parentElement.style.zIndex = '-10'
+                    comment.parentElement.parentElement.style.opacity = '0'
+                }
+            }
+        }
+        
     })
 
     showFilter(authorName)
