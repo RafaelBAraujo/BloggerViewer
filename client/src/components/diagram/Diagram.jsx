@@ -3,11 +3,11 @@ import React from 'react';
 import Picklist from '../atoms/Picklist'
 import FileInput from '../molecules/FileInput'
 
-const Diagram = ({uploadFileAction}) => {
+const Diagram = ({students, uploadFileAction}) => {
 
     return(
         <div id="diagram" className="diagram hide-view">
-            <Picklist items={['julia', 'lennon']}/>
+            <Picklist items={students}/>
             <FileInput action={uploadFileAction} />
         </div>
     )

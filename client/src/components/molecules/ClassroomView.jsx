@@ -14,7 +14,7 @@ const ClassroomView = ({id, title, content}) => {
             <h2 className="mb-0">
                 <div>
                     <button className="btn btn-link" data-toggle="collapse" data-target={target} aria-expanded="true" aria-controls={id}>
-                        {title}
+                        {title + ' (' + content.length + ') '}
                         <i className="material-icons">keyboard_arrow_down</i>
                     </button>
                 </div>

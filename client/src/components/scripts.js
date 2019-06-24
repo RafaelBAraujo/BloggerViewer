@@ -150,6 +150,44 @@ export const filterCommentsByAuthor = (authorName) => {
 
 }
 
+export const setManager = (manager) => {
+
+    let name = manager.split(',')[1]
+    name = name.substr(1, name.length)
+    console.log('name:' + name)
+
+    let comments = document.querySelectorAll('.comment-header')
+
+    // first, reset
+    comments.forEach((comment) => {
+
+        if(comment.parentElement.classList.contains('manager-comment')) {
+            comment.parentElement.classList.toggle('manager-comment')
+        }
+
+    })
+
+
+    // and then mark managers
+    comments.forEach((comment) => {
+
+        if(comment.parentElement.classList.contains('response')) {
+            console.log('than fucking say it')
+            if(comment.querySelector('.profile-name p').innerHTML === name) {
+                console.log('just fuck me, bastard')
+            }
+        }
+
+        if(comment.querySelector('.profile-name p').innerHTML === name) {
+
+            comment.parentElement.classList.toggle('manager-comment')
+
+        }
+
+    })
+
+}
+
 export const rotateIcon = () => {
 
     event.target.lastElementChild.classList.toggle('rotate')

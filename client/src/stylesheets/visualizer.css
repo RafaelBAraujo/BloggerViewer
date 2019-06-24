@@ -34,8 +34,8 @@
 
     /*grid settings*/
     display: grid;
-    grid-template-columns: 16% 84%;
-    grid-template-rows: 7vh 93vh;
+    grid-template-columns: 18% 82%;
+    grid-template-rows: 8vh 92vh;
 
     /*page settings*/
     overflow-y: hidden;
@@ -160,6 +160,11 @@
     margin: 3% 4% 4%;
     background-color: #fff;
     align-self: flex-end;
+    border-top: 2px solid greenyellow;
+}
+
+.manager-comment {
+    border-top: 2px solid crimson !important;
 }
 
 .comment-published {
@@ -191,6 +196,7 @@
     margin: 0% 4% 4%;
     padding: 2%;
     background-color: hsl(0, 0%, 98%) !important;
+    border-top: 2px solid grey;
 }
 
 .comment-header {
@@ -432,10 +438,13 @@ mark {
 .file-upload {
     display: flex;
     flex-direction: column;
-    width: 20%;
+    width: 30%;
 }
 
-.file-upload h4 { margin-right: 15%; }
+.file-upload h5{ 
+    width: 100%;
+    text-align: left;
+}
 
 .file-upload button {
     display: flex;
@@ -443,6 +452,10 @@ mark {
     justify-content: center;
     align-items: center;
     margin-top: 3%;
+}
+
+.picklist {
+    width: 30%;
 }
 
 /* .filtersign-content button {

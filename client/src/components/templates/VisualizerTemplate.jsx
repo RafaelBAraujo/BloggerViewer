@@ -1,5 +1,8 @@
 import React from 'react'
 
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 import Classroom from '../../components/organisms/Classroom'
 import MenuBar from '../../components/molecules/MenuBar'
 import Drawer from '../../components/organisms/Drawer'
@@ -18,8 +21,9 @@ const VisualizerTemplate = ({data, action, uploadFileAction}) => {
         <div className='visualizer'>
             <Classroom views={data.classroomViews}/>
             <MenuBar />
+            <ToastContainer hideProgressBar={true} />
             <Drawer postsList={data.postList} action={action} />
-            <Diagram postId={data.post.id} uploadFileAction={uploadFileAction} />
+            <Diagram students={data.classroom.students} uploadFileAction={uploadFileAction} />
             <Post title={data.post.title} content={data.post.content} comments={data.post.comments}/>
         </div>
     )
