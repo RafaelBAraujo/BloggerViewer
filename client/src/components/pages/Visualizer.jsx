@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import VisualizerTemplate from '../templates/VisualizerTemplate'
 import LoadingScreen from '../molecules/LoadingScreen'
 
-import { uploadFile } from '../scripts'
+import { uploadFile, uploadClass } from '../scripts'
 
 class Visualizer extends Component {
 
@@ -42,6 +42,15 @@ class Visualizer extends Component {
         .then(() => console.log('I\'ve got: ' + this.state.classData))
     }
 
+    uploadClassData = (classData) => {
+        let { classroom } = this.state.data
+        classroom.students = classData
+        uploadClass(classroom)
+        .then((res) => {
+            console.log(res)
+        })
+    }
+
     uploadClassFile = (file) => {
         uploadFile(file, this.state.data.post.id)
         .then((res) => {
@@ -59,7 +68,7 @@ class Visualizer extends Component {
         return(
             <div>
                 {Object.entries(data).length !== 0 && data.constructor === Object ? (
-                        <VisualizerTemplate data={data} classData={data.classroom} action={this.getPost} uploadFileAction={this.uploadClassFile} />
+                        <VisualizerTemplate data={data} classData={data.classroom} action={this.getPost} uploadClassDataAction={this.uploadClassData} uploadFileAction={this.uploadClassFile} />
                     ) : (
                         <LoadingScreen />
                 )

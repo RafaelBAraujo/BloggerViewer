@@ -7,8 +7,13 @@ const Diagram = ({students, uploadFileAction}) => {
 
     return(
         <div id="diagram" className="diagram hide-view">
-            <Picklist items={students}/>
-            <FileInput action={uploadFileAction} />
+            <div className="classroom-input-wrapper">
+                <FileInput action={uploadFileAction} />
+                <Picklist label={'Gestor'} items={students}/>
+            </div>
+            <div className="classroom-summary">
+                
+            </div>
         </div>
     )
 

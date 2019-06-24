@@ -4,7 +4,7 @@ import { openStudentComponent } from '../scripts'
 
 import Student from '../molecules/Student'
 
-const Students = ({students}) => {
+const Students = ({students, uploadClassDataAction}) => {
 
     return(
         <div className="students-wrapper">
@@ -14,7 +14,7 @@ const Students = ({students}) => {
                     <i className="material-icons">fast_forward</i>
                 </button>
             </div>
-            <Student students={students} />
+            <Student students={students} uploadClassDataAction={uploadClassDataAction} />
         </div>
     )
 
