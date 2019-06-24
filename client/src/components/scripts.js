@@ -188,6 +188,19 @@ export const setManager = (manager) => {
 
 }
 
+export const openStudentComponent = (event) => {
+
+    document.getElementById('students').style.transition = '1s'
+    document.getElementById('students').style.width = '100%'
+
+
+    document.getElementById('student').style.transition = '1s'
+    document.getElementById('students').style.width = '0.1px'
+    document.getElementById('students').style.display = 'none'
+    document.getElementById('student').style.width = '100%'
+
+}
+
 export const rotateIcon = () => {
 
     event.target.lastElementChild.classList.toggle('rotate')

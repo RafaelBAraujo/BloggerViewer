@@ -5,7 +5,9 @@ import ClassroomNav from '../molecules/ClassroomNav'
 const Classroom = ({views}) => {
 
     return (
-        <ClassroomNav views={views} />
+        <div className="classroom-nav">
+            <ClassroomNav views={views} />
+        </div>
     )
 
 }
