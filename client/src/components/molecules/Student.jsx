@@ -59,6 +59,12 @@ class Student extends Component {
 
     }
 
+    uploadGrades = (event) => {
+
+        closeStudentComponent(event)
+        this.props.uploadClassDataAction(this.state.students)
+    }
+
     render() {
 
         return (
@@ -96,7 +102,7 @@ class Student extends Component {
                     </div>
                 </div>
                 {/* <StudentView student={this.state.selectedStudent} /> */}
-                <button className="btn btn-light" onClick={() => this.props.uploadClassDataAction(this.state.students)}>Salvar</button>
+                <button className="btn btn-light" onClick={(event) => this.uploadGrades(event)}>Salvar</button>
             </div>
         )
     }

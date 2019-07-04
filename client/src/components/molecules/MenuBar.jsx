@@ -14,7 +14,7 @@ const MenuBar = ({color}) => {
             <Tab name="Comments" className={'tab active-tab'} />
             <Tab name="Classroom" className={'tab'} />
             <SearchBar />
-            <ConfigButton />
+            {/* <ConfigButton /> */}
             <DrawerButton />
         </div>
     )

@@ -22,6 +22,10 @@ class FileInput extends React.Component {
             }
         }
 
+        this.downloadFile = (event) => {
+            
+        }
+
     }
 
     render() {
@@ -35,6 +39,7 @@ class FileInput extends React.Component {
                     </div>
                 </div>
                 <button className="btn btn-info" onClick={(event) => this.sendFile(event)}><i className="material-icons">cloud_upload</i>Upload</button>
+                <button className="btn btn-danger" onClick={(event) => this.downloadFile(event)}><i className="material-icons">save</i>Download</button>
             </div>
         )
     }

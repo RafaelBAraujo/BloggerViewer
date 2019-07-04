@@ -205,6 +205,15 @@ export const openStudentComponent = (event) => {
 
 }
 
+export const closeStudentComponent = (event) => {
+
+    document.getElementById('student').style.width = '0%;'
+
+    document.getElementById('students').style.width = '18%'
+    document.getElementById('students').style.display = 'block'
+
+}
+
 export const rotateIcon = () => {
 
     event.target.lastElementChild.classList.toggle('rotate')
@@ -245,9 +254,15 @@ export const uploadFile = async (file, fileName) => {
 
 }
 
-export const uploadClass = async (data) => {
+export const downloadFile = async (fileName) => {
 
-    let res = await fetch('http://localhost:5000/uploadClass', {
+    
+
+}
+
+export const uploadClass = async (data, postId) => {
+
+    let res = await fetch('http://localhost:5000/uploadClass/' + postId, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
