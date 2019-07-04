@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Form } from 'react-bootstrap'
 
 //import StudentView from './StudentView';
-import CommentPicture from '../atoms/CommentPicture'
 
 class Student extends Component {
 
@@ -17,7 +16,7 @@ class Student extends Component {
     componentDidMount() {
 
         this.state.students.forEach((student) => {
-            if(student.B !== 0 && student.S !== 4 && student.M !== 8) {
+            if(student.B !== 0 && student.S !== 0 && student.M !== 0) {
                 document.getElementById(student.RA).style.backgroundColor = 'LawnGreen'
             }
         })
@@ -83,7 +82,6 @@ class Student extends Component {
                 </div>
 
                 <div className="student-view">
-                    <CommentPicture src={'http://lh3.googleusercontent.com/zFdxGE77vvD2w5xHy6jkVuElKv-U9_9qLkRYK8OnbDeJPtjSZ82UPq5w6hJ-SA=s35'} alt={'http://lh3.googleusercontent.com/zFdxGE77vvD2w5xHy6jkVuElKv-U9_9qLkRYK8OnbDeJPtjSZ82UPq5w6hJ-SA=s35'} />
                     <div className="range-input">
                         <label htmlFor={'Observou'}>{'Observou: ' + this.state.selectedStudent.B}</label>
                          <input id={'Observou'} type="range" className="custom-range" onChange={(event) => this.updateGrades(event)} min={0} max={3.5} step="0.5" />

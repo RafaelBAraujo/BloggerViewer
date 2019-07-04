@@ -273,6 +273,10 @@
     border-top: 2px solid crimson !important;
 }
 
+.manager-picklist {
+    margin-top: 3.5%;
+}
+
 .comment-published {
     align-self: center;
     margin-left: auto;
@@ -598,6 +602,7 @@ mark {
 }
 
 .picklist {
+    align-items: center;
     width: 30%;
 }
 
