@@ -4,7 +4,7 @@ const ConfigButton = () => {
 
     return(
         <div className="posts">
-            <button className="drawer-button"><i className="material-icons">settings</i></button>
+            <button className="btn-clear"><i className="material-icons">settings</i></button>
         </div>
     )
 

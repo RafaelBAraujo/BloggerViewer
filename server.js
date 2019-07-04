@@ -41,13 +41,13 @@ app.get('/visualizer/:blog/getLastPost', (req, res) => {
 
     let blogUrl = blogs[req.params.blog]
 
-    BloggerRequestApi.getBlogId(blogUrl).then((blogId) => {
-        BloggerRequestApi.getLastPost(blogId).then((lastPost) => {
-            BloggerRequestApi.getCommentsByPost(blogId, lastPost.id).then((comments) => {
-                BloggerRequestApi.getPosts(blogId).then((posts) => {
+    BloggerRequestApi.getBlogId(blogUrl).then((blog) => {
+        BloggerRequestApi.getLastPost(blog.id).then((lastPost) => {
+            BloggerRequestApi.getCommentsByPost(blog.id, lastPost.id).then((comments) => {
+                BloggerRequestApi.getPosts(blog.id).then((posts) => {
                     firebase.downloadData('classes/'+lastPost.id).then((classroom) => {
 
-                        res.json(new BloggerResponse(null, lastPost, classroom, comments, posts))
+                        res.json(new BloggerResponse(blog, lastPost, classroom, comments, posts))
 
                     })
                 })
@@ -64,13 +64,13 @@ app.get('/visualizer/:blog/getPost/:id', (req, res) => {
     let blogUrl = blogs[req.params.blog]
     let postId = req.params.id
 
-    BloggerRequestApi.getBlogId(blogUrl).then((blogId) => {
-        BloggerRequestApi.getPostById(blogId, postId).then((fetchedPost) => {
-            BloggerRequestApi.getCommentsByPost(blogId, fetchedPost.id).then((comments) => {
-                BloggerRequestApi.getPosts(blogId).then((posts) => {
+    BloggerRequestApi.getBlogId(blogUrl).then((blog) => {
+        BloggerRequestApi.getPostById(blog.id, postId).then((fetchedPost) => {
+            BloggerRequestApi.getCommentsByPost(blog.id, fetchedPost.id).then((comments) => {
+                BloggerRequestApi.getPosts(blog.id).then((posts) => {
                     firebase.downloadData('classes/'+postId).then((classroom) => {
 
-                        res.json(new BloggerResponse(null, fetchedPost, classroom, comments, posts))
+                        res.json(new BloggerResponse(blog, fetchedPost, classroom, comments, posts))
     
                         let end = new Date() - start
                         console.info('Execution time: %dms', end)
@@ -87,14 +87,14 @@ app.get('/visualizer/test', (req, res) => {
 
     let blogUrl = blogs['adm_si']
     
-    BloggerRequestApi.getBlogId(blogUrl).then((blogId) => {
-        BloggerRequestApi.getLastPost(blogId).then((lastPost) => {
-            BloggerRequestApi.getCommentsByPost(blogId, lastPost.id).then((comments) => {
-                BloggerRequestApi.getPosts(blogId).then((posts) => {
+    BloggerRequestApi.getBlogId(blogUrl).then((blog) => {
+        BloggerRequestApi.getLastPost(blog.id).then((lastPost) => {
+            BloggerRequestApi.getCommentsByPost(blog.id, lastPost.id).then((comments) => {
+                BloggerRequestApi.getPosts(blog.id).then((posts) => {
                     firebase.downloadData('classes/'+postId).then((classroom) => {
 
                         let start = new Date()
-                        const bresponse = new BloggerResponse(null, lastPost, classroom, comments, posts)
+                        const bresponse = new BloggerResponse(blog, lastPost, classroom, comments, posts)
                         let end = new Date() - start
                         console.info('Execution time: %dms', end)
                         res.json(bresponse.post.comments)
@@ -223,6 +223,7 @@ app.get('/download/:query', (req, res) => {
 
 app.post('/uploadClass/:postId', (req, res) => {
 
+<<<<<<< HEAD
     let data = JSON.parse(JSON.stringify(req.body))
     console.log(data)
 
@@ -242,6 +243,26 @@ app.post('/uploadClass/:postId', (req, res) => {
         }
     })
         
+=======
+    console.log(req.body)
+
+    // firebase.uploadData('classes/', req.body).then((error) => {
+    //     let now = new Date();
+    //     let timeString = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDay() + 'AT' + now.getHours()+now.getMinutes()+now.getSeconds()
+    //     if (error) {
+    //         fs.writeFile('./private/log/error/' + timeString + '.error.log', JSON.stringify(error), 'utf-8', (err, result) => {
+    //             if(err) console.log(err)
+    //         })
+    //         res.status(505).send(req.body)
+    //     } else {
+    //         fs.writeFile('./private/log/request/' + timeString + '.request.log', JSON.stringify({ header: req.headers, body: req.body }), 'utf-8', (err, result) => {
+    //             if(err) console.log(err)
+    //         })
+    //         res.status(200).send(req.body)
+    //     }
+    // })
+
+>>>>>>> 042f45f5cd4df258d9b0d1ee88caa3b122adcab6
 })
 
 app.listen(port, hostname, () => {

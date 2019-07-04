@@ -10,12 +10,20 @@ class Visualizer extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            data: {}
+            data: {},
+            color: null
         }
     }
 
     componentDidMount() {
         console.log('mounted')
+        if(this.props.blog === 'adm_tec') {
+            this.setState({ color: '#90A4AE' })
+        } else if(this.props.blog === 'adm_si') {
+            this.setState({ color: '#e8d1a5' })
+        } else {
+            this.setState({ color: '#c6cfd4' })
+        }
         this.getPostData()
     }
 
@@ -68,7 +76,7 @@ class Visualizer extends Component {
         return(
             <div>
                 {Object.entries(data).length !== 0 && data.constructor === Object ? (
-                        <VisualizerTemplate data={data} classData={data.classroom} action={this.getPost} uploadClassDataAction={this.uploadClassData} uploadFileAction={this.uploadClassFile} />
+                        <VisualizerTemplate data={data} blogColor={this.state.color} classData={data.classroom} action={this.getPost} uploadClassDataAction={this.uploadClassData} uploadFileAction={this.uploadClassFile} />
                     ) : (
                         <LoadingScreen />
                 )

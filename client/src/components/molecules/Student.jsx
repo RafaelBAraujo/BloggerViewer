@@ -14,6 +14,16 @@ class Student extends Component {
             selectedStudent: { RA: 0, Nome: '', B: 0, S: 0, M: 0 }
         }
     }
+
+    componentDidMount() {
+
+        this.state.students.forEach((student) => {
+            if(student.B !== 0 && student.S !== 4 && student.M !== 8) {
+                document.getElementById(student.RA).style.backgroundColor = 'LawnGreen'
+            }
+        })
+
+    }
     
     updateGrades = (event) => {
 
@@ -25,6 +35,8 @@ class Student extends Component {
         } else {
             current.M = event.target.value
         }
+
+        document.getElementById(current.RA).style.backgroundColor = 'LawnGreen'
 
         this.setState({ selectedStudent: current })
 
@@ -64,9 +76,10 @@ class Student extends Component {
                     <Form>
                         <Form.Group>
                             <Form.Control as="select" className="manager-picklist" onChange={(event) => this.selectStudent(event)} >
+                                <option key={''}>Selecione um aluno</option>
                                 {this.props.students.map(student => {
                                     return (
-                                        <option key={student.RA} >
+                                        <option key={student.RA} id={student.RA} >
                                             {student.RA + ' ' + student.Nome}
                                         </option>
                                     )

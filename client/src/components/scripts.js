@@ -1,5 +1,9 @@
 import Axios from 'axios';
 
+export const goToPreviousPage = () => {
+    window.history.back()
+}
+
 export const expandDrawer = () => {
     document.getElementById("mySidenav").style.width = "34%"
 }
@@ -136,7 +140,7 @@ export const filterCommentsByAuthor = (authorName) => {
 
         if(!hasRepliesByAuthor) {
             if(comment.querySelector('.profile-name p').innerHTML !== authorName) {
-                if((!comment.parentElement.classList.contains('response')) && comment.parentElement.parentElement.style.opacity !== '0') {
+                if(!comment.parentElement.classList.contains('response') && comment.parentElement.parentElement.style.opacity !== '0') {
                     comment.parentElement.parentElement.style.height = '0px'
                     comment.parentElement.parentElement.style.zIndex = '-10'
                     comment.parentElement.parentElement.style.opacity = '0'
