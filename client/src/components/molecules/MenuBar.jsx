@@ -3,7 +3,7 @@ import React from 'react'
 import Tab from '../atoms/Tab'
 import SearchBar from '../atoms/SearchBar'
 import DrawerButton from '../atoms/DrawerButton'
-import ConfigButton from '../atoms/ConfigButton'
+// import ConfigButton from '../atoms/ConfigButton'
 
 const MenuBar = () => {
     
@@ -12,7 +12,7 @@ const MenuBar = () => {
             <Tab name="Comments" className={'tab active-tab'} />
             <Tab name="Classroom" className={'tab'} />
             <SearchBar />
-            <ConfigButton />
+            {/* <ConfigButton /> */}
             <DrawerButton />
         </div>
     )

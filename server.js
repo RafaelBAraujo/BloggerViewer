@@ -221,9 +221,12 @@ app.get('/download/:query', (req, res) => {
 
 })
 
-app.post('/uploadClass', (req, res) => {
+app.post('/uploadClass/:postId', (req, res) => {
 
-    firebase.uploadData('classes/', req.body).then((error) => {
+    let data = JSON.parse(JSON.stringify(req.body))
+    console.log(data)
+
+    firebase.uploadData('classes/'+req.params.postId, data).then((error) => {
         let now = new Date();
         let timeString = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDay() + 'AT' + now.getHours()+now.getMinutes()+now.getSeconds()
         if (error) {
@@ -238,7 +241,7 @@ app.post('/uploadClass', (req, res) => {
             res.status(200).send(req.body)
         }
     })
-
+        
 })
 
 app.listen(port, hostname, () => {

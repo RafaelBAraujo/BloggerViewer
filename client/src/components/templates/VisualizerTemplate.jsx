@@ -14,13 +14,11 @@ import 'mark.js'
 import 'bootstrap/dist/css/bootstrap.css'
 import '../../stylesheets/visualizer.css'
 
-const VisualizerTemplate = ({data, action, uploadClassDataAction, uploadFileAction}) => {
-
-    console.log('template data: ' + data.classroom)
+const VisualizerTemplate = ({data, classData, action, uploadClassDataAction, uploadFileAction}) => {
 
     return(
         <div>
-        <button className="btn btn-dark" onClick={() => uploadClassDataAction(JSON.parse(JSON.stringify(data.classroom)))}>Upload crap</button>
+        {/* <button className="btn btn-dark" onClick={() => uploadClassDataAction(data.classroom.students)}>Upload crap</button> */}
         <div className='visualizer'>
             
             <Classroom views={data.classroomViews}/>
