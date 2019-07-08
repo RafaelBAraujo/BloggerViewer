@@ -12,6 +12,7 @@ import Students from '../organisms/Students'
 import Tag from '../atoms/Tag'
 
 import 'mark.js'
+import 'popper.js'
 import 'bootstrap/dist/css/bootstrap.css'
 import '../../stylesheets/visualizer.css'
 

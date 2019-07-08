@@ -640,6 +640,23 @@ mark {
     margin: 5%;
 }
 
+.popper-btn {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 30px !important;
+    width: 30px !important;
+
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+.popper-btn:hover {
+    transition: 250ms;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
 .profile-name { font-weight: bold; margin-top: 1%; margin-left: 2%; }
 .post-title { font-size: 1.5em; font-weight: bold; margin-top: 1.5%; margin-left: 2%; float: left; }
 

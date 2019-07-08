@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import { Form } from 'react-bootstrap'
 
 //import StudentView from './StudentView';
+import $ from 'jquery'
+import { closeStudentComponent } from '../scripts'
+
+import PopperButton from '../atoms/PopperButton'
 
 class Student extends Component {
 
@@ -14,6 +18,11 @@ class Student extends Component {
     }
 
     componentDidMount() {
+
+
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
 
         this.state.students.forEach((student) => {
             if(student.B !== 0 && student.S !== 0 && student.M !== 0) {
@@ -86,7 +95,7 @@ class Student extends Component {
                         </Form.Group>
                     </Form>
                 </div>
-
+                <PopperButton icon="assessment" isHtml="true" data='<p align="left">Nº Comentários: 23</p><p align="left">Nº de Interações: 4</p><p align="left">Nº de Respostas: 10</p>' />
                 <div className="student-view">
                     <div className="range-input">
                         <label htmlFor={'Observou'}>{'Observou: ' + this.state.selectedStudent.B}</label>

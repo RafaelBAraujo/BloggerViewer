@@ -223,7 +223,6 @@ app.get('/download/:query', (req, res) => {
 
 app.post('/uploadClass/:postId', (req, res) => {
 
-<<<<<<< HEAD
     let data = JSON.parse(JSON.stringify(req.body))
     console.log(data)
 
@@ -243,26 +242,6 @@ app.post('/uploadClass/:postId', (req, res) => {
         }
     })
         
-=======
-    console.log(req.body)
-
-    // firebase.uploadData('classes/', req.body).then((error) => {
-    //     let now = new Date();
-    //     let timeString = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDay() + 'AT' + now.getHours()+now.getMinutes()+now.getSeconds()
-    //     if (error) {
-    //         fs.writeFile('./private/log/error/' + timeString + '.error.log', JSON.stringify(error), 'utf-8', (err, result) => {
-    //             if(err) console.log(err)
-    //         })
-    //         res.status(505).send(req.body)
-    //     } else {
-    //         fs.writeFile('./private/log/request/' + timeString + '.request.log', JSON.stringify({ header: req.headers, body: req.body }), 'utf-8', (err, result) => {
-    //             if(err) console.log(err)
-    //         })
-    //         res.status(200).send(req.body)
-    //     }
-    // })
-
->>>>>>> 042f45f5cd4df258d9b0d1ee88caa3b122adcab6
 })
 
 app.listen(port, hostname, () => {
