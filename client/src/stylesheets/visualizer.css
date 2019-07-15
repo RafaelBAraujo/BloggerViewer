@@ -16,7 +16,7 @@
     height: 100vh;
     width: 100vw;
     
-    background-image: url('../../public/images/tech_bg.jpg');
+    background-image: url('https://firebasestorage.googleapis.com/v0/b/bloggerviewer-dccb0.appspot.com/o/tech_bg.jpg?alt=media&token=c245d3eb-7682-41bd-8b84-1be5d4666678');
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -34,18 +34,35 @@
     margin-top: 8%;
     font-size: 4rem;
 
-    color: lightgray;
+    color: #eeeeee;
 }
 
 .blog-links {
+    transition: 1s;
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     flex-direction: row;
+
+    position: absolute;
+    top: -20%;
+}
+
+.blog-links a{
+    margin: 1%;
+    width: 30%;
+}
+
+.blog-links a button {
+    width: 100%;
+    height: 18vh;
 }
 
 .home-menu {
+    position: relative;
     align-self: center;
-    width: 25%;
+    width: 60%;
     height: 10%;
     margin-top: 14%;
 }
@@ -58,6 +75,7 @@
     color: lightgray;
 
     background-color: rgba(0, 0, 0, 0.35);
+    z-index: 4;
 }
 
 .home-menu-btn:hover {
@@ -695,9 +713,9 @@ mark {
 
 .profile-name { font-weight: bold; margin-top: 1%; margin-left: 2%; }
 .post-title { font-size: 1.5em; font-weight: bold; margin-top: 1.5%; margin-left: 2%; float: left; }
-.hide { transition: 600ms; opacity: 0; }
-.show { transition: 600ms; opacity: 0; }
-.hidden { display: none; opacity: 0;}
+.hide { transition: 600ms; opacity: 0; z-index: -2; }
+.show { transition: 600ms; opacity: 100; }
+.hidden { transition: 1s; top: 180%; opacity: 0;}
 
 button { border: none; }
 button:focus { outline:0; }
