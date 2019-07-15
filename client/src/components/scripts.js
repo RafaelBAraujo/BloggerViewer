@@ -105,6 +105,14 @@ export const clearMarks = () => {
             comment.parentElement.parentElement.style.zIndex = '0'
             comment.parentElement.parentElement.style.opacity = '1'
         }
+
+        if(comment.parentElement.classList.contains('response')) {
+            comment.parentElement.style.height = 'auto'
+            comment.parentElement.style.zIndex = '0'
+            comment.parentElement.style.opacity = '1'
+            comment.parentElement.style.display = 'block'
+        }
+
     })
 
 }
@@ -146,6 +154,17 @@ export const filterCommentsByAuthor = (authorName) => {
                     comment.parentElement.parentElement.style.opacity = '0'
                 }
             }
+        }
+
+        for(let i = 0; i < replies.length; ++i) {
+
+            if(replies[i].querySelector('.comment-header .profile-name p').innerHTML !== authorName) {
+                replies[i].style.height = '0px'
+                replies[i].style.zIndex = '-10'
+                replies[i].style.opacity = '0'
+                replies[i].style.display = 'none'
+            }
+
         }
 
     })
