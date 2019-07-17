@@ -79,7 +79,7 @@ class Student extends Component {
         return (
             <div id="student" className="student">
                 
-                <div className="picklist">
+                <div className="student-picklist">
                     <Form>
                         <Form.Group>
                             <Form.Control as="select" className="manager-picklist" onChange={(event) => this.selectStudent(event)} >

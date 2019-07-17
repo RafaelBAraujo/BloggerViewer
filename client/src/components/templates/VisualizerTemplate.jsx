@@ -28,7 +28,7 @@ const VisualizerTemplate = ({data, blogColor, action, uploadClassDataAction, upl
             <Tag label={data.blog.name} />
             <ToastContainer hideProgressBar={true} />
             <Drawer postsList={data.postList} action={action} />
-            <Diagram students={data.classroom.students} uploadFileAction={uploadFileAction} />
+            <Diagram students={data.classroom.students} authors={data.authors} uploadFileAction={uploadFileAction} />
             <Post title={data.post.title} content={data.post.content} comments={data.post.comments}/>
             <Students students={data.classroom.students} uploadClassDataAction={uploadClassDataAction} />
         </div>
