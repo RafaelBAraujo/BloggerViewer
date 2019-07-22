@@ -152,12 +152,12 @@ app.post('/upload', (req, res) => {
                 }
             })
 
-            /*var rs = new stream.Readable({ objectMode: true });
+            var rs = new stream.Readable({ objectMode: true });
             rs.push(jstring)
             rs.push(null)
 
 
-            firebase.uploadFileFromStream(rs, req.file.originalname+'.json')*/
+            firebase.uploadFileFromStream(rs, req.file.originalname+'.json')
 
             return res.status(200).send(req.file)
 
