@@ -203,20 +203,51 @@ app.get('/getClassFile/:query', (req, res) => {
 
 })
 
-app.get('/download/:query', (req, res) => {
+app.get('/getSpreadsheet/:query', (req, res) => {
 
     let query = req.params.query
 
-    firebase.downloadFile(query).then((file) => {
+    firebase.downloadFile(query+'.xlsx').then((file) => {
 
-        res.setHeader('Content-Length', file.metadata.size);
-        res.setHeader('Content-Type', file.metadata.contentType);
-        res.setHeader('Content-Disposition', 'attachment; filename=' + file.metadata.name);
+        let buffers = []
 
-        
-        let writeStream = file.createReadStream()
-        writeStream.pipe(res)
-        res.end()
+        file.createReadStream()
+        .on('data', (data) => {
+            buffers.push(data)
+        })
+        .on('error', (error) => {
+            console.log('An error ocurred while reading the file stream.')
+            Utils.logError(error)
+        })
+        .on('end', () => {
+
+            firebase.downloadData('classes/' + query).then((classData) => {
+
+                let bla = JSON.parse(JSON.stringify(classData))
+
+                let bla2 = []
+                bla2.push(bla)
+                let classWorksheet = xlsx.utils.json_to_sheet(bla2)
+
+                let buffer = Buffer.concat(buffers)
+
+                let workbook = xlsx.read(buffer, {type: 'buffer'})
+                xlsx.utils.book_append_sheet(workbook, classWorksheet, 'grades to append')
+
+                var wbbuf = xlsx.write(workbook, {
+                    type: 'base64'
+                });
+
+                res.setHeader('Content-Length', wbbuf.length);
+                res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                res.setHeader('Content-Disposition', 'attachment; filename=' + query + '.xlsx');
+                res.status(200)
+                res.end(Buffer.from(wbbuf, 'base64'));
+
+            })
+            
+        })
+
     })
 
 })
@@ -224,20 +255,19 @@ app.get('/download/:query', (req, res) => {
 app.post('/uploadClass/:postId', (req, res) => {
 
     let data = JSON.parse(JSON.stringify(req.body))
-    console.log(data)
 
     firebase.uploadData('classes/'+req.params.postId, data).then((error) => {
-        let now = new Date();
-        let timeString = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDay() + 'AT' + now.getHours()+now.getMinutes()+now.getSeconds()
+        
         if (error) {
-            fs.writeFile('./private/log/error/' + timeString + '.error.log', JSON.stringify(error), 'utf-8', (err, result) => {
-                if(err) console.log(err)
-            })
+
+            Utils.logError(error)
+            
             res.status(505).send(req.body)
+
         } else {
-            fs.writeFile('./private/log/request/' + timeString + '.request.log', JSON.stringify({ header: req.headers, body: req.body }), 'utf-8', (err, result) => {
-                if(err) console.log(err)
-            })
+
+            Utils.log(JSON.stringify({ header: req.headers, body: req.body }))
+
             res.status(200).send(req.body)
         }
     })
