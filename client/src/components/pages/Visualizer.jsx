@@ -32,6 +32,7 @@ class Visualizer extends Component {
         fetch('/visualizer/'+ this.props.blog +'/getLastPost')
         .then(res => res.json())
         .then(data => this.setState({ data }))
+        //.then(() => console.log('postcode:'+this.state.data.postCode))
     }
 
     getPost = (postId) => {
@@ -53,6 +54,7 @@ class Visualizer extends Component {
     uploadClassData = (classData) => {
         let { classroom } = this.state.data
         classroom.students = classData
+        classroom.postCode = this.state.data.postCode
         uploadClass(classroom, this.state.data.post.id)
         .then((res) => {
             console.log(res)

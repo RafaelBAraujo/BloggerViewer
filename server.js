@@ -223,26 +223,22 @@ app.get('/getSpreadsheet/:query', (req, res) => {
 
             firebase.downloadData('classes/' + query).then((classData) => {
 
-                let bla = JSON.parse(JSON.stringify(classData))
-
-                let bla2 = []
-                bla2.push(bla)
-                let classWorksheet = xlsx.utils.json_to_sheet(bla2)
-
                 let buffer = Buffer.concat(buffers)
 
-                let workbook = xlsx.read(buffer, {type: 'buffer'})
-                xlsx.utils.book_append_sheet(workbook, classWorksheet, 'grades to append')
+                let classWorksheet = Utils.class_to_sheet(classData)
 
-                var wbbuf = xlsx.write(workbook, {
+                let workbook = xlsx.read(buffer, {type: 'buffer'})
+                xlsx.utils.book_append_sheet(workbook, classWorksheet, classData.postCode)
+
+                var workbookBuffer = xlsx.write(workbook, {
                     type: 'base64'
                 });
 
-                res.setHeader('Content-Length', wbbuf.length);
+                res.setHeader('Content-Length', workbookBuffer.length);
                 res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
                 res.setHeader('Content-Disposition', 'attachment; filename=' + query + '.xlsx');
                 res.status(200)
-                res.end(Buffer.from(wbbuf, 'base64'));
+                res.end(Buffer.from(workbookBuffer, 'base64'));
 
             })
             
