@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import VisualizerTemplate from '../templates/VisualizerTemplate'
 import LoadingScreen from '../molecules/LoadingScreen'
 
-import { uploadFile, uploadClass } from '../scripts'
+import { uploadFile, uploadClass, downloadFile } from '../scripts'
 
 class Visualizer extends Component {
 
@@ -66,6 +66,11 @@ class Visualizer extends Component {
         })
     }
 
+    downloadSpreadsheet = () => {
+        console.log(this.state.data.post.id)
+        window.location.replace("http://localhost:5000/getSpreadsheet/" + this.state.data.post.id);
+    }
+
     render() {
 
         const { data } = this.state
@@ -73,7 +78,7 @@ class Visualizer extends Component {
         return(
             <div>
                 {Object.entries(data).length !== 0 && data.constructor === Object ? (
-                        <VisualizerTemplate data={data} blogColor={this.state.color} classData={data.classroom} action={this.getPost} uploadClassDataAction={this.uploadClassData} uploadFileAction={this.uploadClassFile} />
+                        <VisualizerTemplate data={data} blogColor={this.state.color} classData={data.classroom} action={this.getPost} uploadClassDataAction={this.uploadClassData} uploadFileAction={this.uploadClassFile} downloadAction={this.downloadSpreadsheet}/>
                     ) : (
                         <LoadingScreen />
                 )
