@@ -10,7 +10,7 @@ const Diagram = ({students, authors, uploadFileAction, downloadAction}) => {
         <div id="diagram" className="diagram hide-view">
             <div className="classroom-input-wrapper">
                 <FileInput action={uploadFileAction} downloadAction={downloadAction} />
-                <Picklist label={'Gestor'} items={students}/>
+                {/* <Picklist label={'Gestor'} items={students}/> */}
             </div>
             <div className="summary-wrapper">
                 <ClassSummary students={authors} />
