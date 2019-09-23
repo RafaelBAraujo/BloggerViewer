@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const xlsx = require('xlsx')
 var stream = require('stream');
+var mime = require('mime')
 
 const app = express()
 
@@ -152,12 +153,16 @@ app.post('/upload', (req, res) => {
                 }
             })
 
-            var rs = new stream.Readable({ objectMode: true });
-            rs.push(jstring)
-            rs.push(null)
+            //firebase.uploadFile(req.file.path)
+
+            let rs = fs.createReadStream(req.file.path)
+
+            // var rs = new stream.Readable({ objectMode: true });
+            // rs.push(jstring)
+            // rs.push(null)
 
 
-            firebase.uploadFileFromStream(rs, req.file.originalname+'.json')
+            firebase.uploadFileFromStream(rs, req.file.originalname+'.xlsx')
 
             return res.status(200).send(req.file)
 
@@ -207,16 +212,31 @@ app.get('/download/:query', (req, res) => {
 
     let query = req.params.query
 
-    firebase.downloadFile(query).then((file) => {
+    firebase.downloadFile2(query).then((file) => {
 
-        res.setHeader('Content-Length', file.metadata.size);
-        res.setHeader('Content-Type', file.metadata.contentType);
-        res.setHeader('Content-Disposition', 'attachment; filename=' + file.metadata.name);
+        file.get((err, file, apiResponse) => {
+            res.setHeader('Content-disposition', 'attachment; filename=' + file.metadata.name);
+            res.setHeader('Content-type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 
+            console.log(file)
+            fs.createReadStream(file).pipe(res)
+
+        })
+
+
+        // console.log(file)
         
-        let writeStream = file.createReadStream()
-        writeStream.pipe(res)
-        res.end()
+        // // // const workbook = xlsx.readFile(req.file.path)
+
+        // // // const classDataSheet = xlsx.utils.json_to_sheet(JSON.parse(classData))
+        // // // xlsx.utils.book_append_sheet(workbook, classDataSheet, 'novas notas')
+
+        // // // xlsx.writeFile(workbook, file.path)
+
+        // let writeStream = file.createWriteStream()
+        // writeStream.pipe(res) 
+        // res.end()
+
     })
 
 })

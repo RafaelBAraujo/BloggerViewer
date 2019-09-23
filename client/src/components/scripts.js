@@ -194,13 +194,6 @@ export const setManager = (manager) => {
     // and then mark managers
     comments.forEach((comment) => {
 
-        if(comment.parentElement.classList.contains('response')) {
-            console.log('than fucking say it')
-            if(comment.querySelector('.profile-name p').innerHTML === name) {
-                console.log('just fuck me, bastard')
-            }
-        }
-
         if(comment.querySelector('.profile-name p').innerHTML === name) {
 
             comment.parentElement.classList.toggle('manager-comment')
