@@ -24,6 +24,8 @@ class FileInput extends React.Component {
 
         this.downloadFile = (event) => {
             
+            this.props.downloadAction()
+
         }
 
     }

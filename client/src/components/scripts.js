@@ -268,7 +268,17 @@ export const uploadFile = async (file, fileName) => {
 
 export const downloadFile = async (fileName) => {
 
-    
+    let file = await setTimeout(() => {
+
+        const response = {
+            file: 'http://localhost:5000/getSpreadSheet/' + fileName
+        }
+
+        return response.file
+
+    }, 100)
+
+    return file
 
 }
 
