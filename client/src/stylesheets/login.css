@@ -1,0 +1,60 @@
+.login-page {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: url('https://firebasestorage.googleapis.com/v0/b/bloggerviewer-dccb0.appspot.com/o/tech_bg.jpg?alt=media&token=c245d3eb-7682-41bd-8b84-1be5d4666678');
+}
+
+.login-page h3 {
+    color: hsl(0, 0%, 98%);
+}
+
+.login {
+    width: 25vw;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    justify-self: center;
+    background-color: hsl(0, 0%, 98%);
+}
+
+.login-input {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.email-input {
+    display: flex;
+    flex-flow: row;
+    margin-bottom: 3%;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.email-input input {
+    border: 0px solid;
+    padding: 5%;
+    width: 75%;
+    outline: none;
+    background-color: rgba(0, 0, 0, 0.0);
+}
+
+.login-input-label {
+    font-weight: 500;
+    margin: 0%;
+}
+
+.default-login {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.default-login a {
+    margin: 0%;
+    padding-top: 1%;
+}
