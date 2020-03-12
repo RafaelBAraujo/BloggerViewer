@@ -126,7 +126,7 @@ var storage = multer.diskStorage({
 
 let upload = multer({ storage: storage }).single('file')
 
-app.post('/upload', (req, res) => {
+app.post('/upload/:blogId', (req, res) => {
 
 
     upload(req, res, function (err) {
@@ -146,7 +146,7 @@ app.post('/upload', (req, res) => {
             
             let classroom = new Classroom(req.file.originalname, Utils.filterStudents(jstring))
 
-            firebase.uploadData('classes/' + req.file.originalname, classroom).then((error) => {
+            firebase.uploadData('classes/'+req.params.blogId+'/'+req.file.originalname, classroom).then((error) => {
                 if (error) {
                     console.log(error)
                     res.status(505).send(req.body)

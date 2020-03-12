@@ -17,13 +17,7 @@ class Visualizer extends Component {
 
     componentDidMount() {
         console.log('mounted')
-        if(this.props.blog === 'adm_tec') {
-            this.setState({ color: '#90A4AE' })
-        } else if(this.props.blog === 'adm_si') {
-            this.setState({ color: '#e8d1a5' })
-        } else {
-            this.setState({ color: '#c6cfd4' })
-        }
+        this.setState({ color: '#90A4AE' })
         this.getPostData()
     }
 
@@ -57,7 +51,7 @@ class Visualizer extends Component {
     }
 
     uploadClassFile = (file) => {
-        uploadFile(file, this.state.data.post.id)
+        uploadFile(file, this.state.data.post.id, this.state.data.blog.id)
         .then((res) => {
             if(res.statusText === 'OK') {
                 this.setState({ data: {} })

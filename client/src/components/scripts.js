@@ -12,10 +12,31 @@ export const closeDrawer = () => {
     document.getElementById("mySidenav").style.width = "0";
 }
 
-function switchView() {
+export const switchView = (selectedView) => {
 
-    document.getElementById("comments").classList.toggle('hide-view')
-    document.getElementById("diagram").classList.toggle('hide-view')
+    let blogView = document.getElementById("comments")
+    let classroomView = document.getElementById("diagram")
+    let dashboardView = document.getElementById("dashboard")
+
+    if(!blogView.classList.contains('hide-view')) {
+        blogView.classList.toggle('hide-view')
+    }
+    
+    if(!classroomView.classList.contains('hide-view')) {
+        classroomView.classList.toggle('hide-view')
+    }
+
+    if(!dashboardView.classList.contains('hide-view')) {
+        dashboardView.classList.toggle('hide-view')
+    }
+
+    if(selectedView === 'dashboard') {
+        dashboardView.classList.toggle('hide-view')
+    } else if(selectedView === 'classroomView') {
+        classroomView.classList.toggle('hide-view')
+    } else if(selectedView === 'blogView') {
+        blogView.classList.toggle('hide-view')
+    }
     
 }
 
@@ -27,15 +48,15 @@ export const switchTab = (tab) => {
 
         document.getElementById(tabId).classList.toggle('active-tab')
         document.getElementById("CommentsTab").classList.toggle('active-tab')
+        switchView('classroomView')
 
-    } else {
+    } else if(tabId === "CommentsTab") {
 
         document.getElementById(tabId).classList.toggle('active-tab')
         document.getElementById("ClassroomTab").classList.toggle('active-tab')
+        switchView('blogView')
 
     }
-
-    switchView()
 
 }
 
@@ -252,7 +273,7 @@ export const fetchPost = async (postId) => {
 
 import axios from 'axios'
 
-export const uploadFile = async (file, fileName) => {
+export const uploadFile = async (file, fileName, blogId) => {
 
     const data = new FormData()
 
@@ -260,7 +281,7 @@ export const uploadFile = async (file, fileName) => {
 
     Axios.toString()
 
-    let res = await axios.post("http://localhost:5000/upload", data, {})
+    let res = await axios.post("http://localhost:5000/upload/" + blogId, data, {})
 
     return res
 
