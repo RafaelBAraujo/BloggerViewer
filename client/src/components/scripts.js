@@ -47,14 +47,14 @@ export const switchTab = (tab) => {
     if(tabId === "ClassroomTab") {
 
         document.getElementById(tabId).classList.toggle('active-tab')
-        document.getElementById("CommentsTab").classList.toggle('active-tab')
-        switchView('classroomView')
+        document.getElementById("SetupTab").classList.toggle('active-tab')
+        switchView('blogView')
 
-    } else if(tabId === "CommentsTab") {
+    } else if(tabId === "SetupTab") {
 
         document.getElementById(tabId).classList.toggle('active-tab')
         document.getElementById("ClassroomTab").classList.toggle('active-tab')
-        switchView('blogView')
+        switchView('classroomView')
 
     }
 
@@ -312,6 +312,21 @@ export const uploadClass = async (data, postId) => {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data)
+    })
+
+    return res
+
+}
+
+export const updateKeywords = async (blogId, postId, keywords) => {
+
+    let res = await fetch('http://localhost:5000/updateKeywords/'+blogId+'/'+postId+'/', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(keywords)
     })
 
     return res

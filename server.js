@@ -46,10 +46,12 @@ app.get('/visualizer/:blog/getLastPost', (req, res) => {
         BloggerRequestApi.getLastPost(blog.id).then((lastPost) => {
             BloggerRequestApi.getCommentsByPost(blog.id, lastPost.id).then((comments) => {
                 BloggerRequestApi.getPosts(blog.id).then((posts) => {
-                    firebase.downloadData('classes/'+lastPost.id).then((classroom) => {
+                    firebase.downloadData('classes/'+blog.id+'/studentsNames/students').then((classroom) => {
+                        firebase.downloadData('classes/'+blog.id+'/posts/'+lastPost.id+'/keywords/').then((keywords) => {
 
-                        res.json(new BloggerResponse(blog, lastPost, classroom, comments, posts))
+                            res.json(new BloggerResponse(blog, lastPost, classroom, comments, posts, keywords))
 
+                        })
                     })
                 })
             })
@@ -69,13 +71,15 @@ app.get('/visualizer/:blog/getPost/:id', (req, res) => {
         BloggerRequestApi.getPostById(blog.id, postId).then((fetchedPost) => {
             BloggerRequestApi.getCommentsByPost(blog.id, fetchedPost.id).then((comments) => {
                 BloggerRequestApi.getPosts(blog.id).then((posts) => {
-                    firebase.downloadData('classes/'+postId).then((classroom) => {
+                    firebase.downloadData('classes/'+blog.id+'/studentsNames/students').then((classroom) => {
+                        firebase.downloadData('classes/'+blog.id+'/posts/'+fetchedPost.id+'/keywords/').then((keywords) => {
 
-                        res.json(new BloggerResponse(blog, fetchedPost, classroom, comments, posts))
-    
-                        let end = new Date() - start
-                        console.info('Execution time: %dms', end)
+                            res.json(new BloggerResponse(blog, fetchedPost, classroom, comments, posts, keywords))
+        
+                            let end = new Date() - start
+                            console.info('Execution time: %dms', end)
 
+                        })
                     })
                 })
             })
@@ -144,9 +148,9 @@ app.post('/upload/:blogId', (req, res) => {
             const worksheet = workbook.Sheets[workbook.SheetNames[0]]
             let jstring = JSON.stringify(xlsx.utils.sheet_to_json(worksheet, {header: 0, raw: true}))
             
-            let classroom = new Classroom(req.file.originalname, Utils.filterStudents(jstring))
+            let classroom = new Classroom(Utils.filterStudents(jstring))
 
-            firebase.uploadData('classes/'+req.params.blogId+'/'+req.file.originalname, classroom).then((error) => {
+            firebase.uploadData('classes/'+req.params.blogId+'/studentsNames/', classroom).then((error) => {
                 if (error) {
                     console.log(error)
                     res.status(505).send(req.body)
@@ -253,11 +257,49 @@ app.get('/getSpreadsheet/:query', (req, res) => {
 
 })
 
+app.get('/getStudent/:blogId/:id', (req, res) => {
+
+    let studentId = req.params.id
+    let blogId = req.params.blogId
+
+    firebase.downloadData('classes/'+blogId+'/students/'+ studentId).then((studentData) => {
+
+        return res.json(studentData)
+
+    })
+
+})
+
 app.post('/uploadClass/:postId', (req, res) => {
 
     let data = JSON.parse(JSON.stringify(req.body))
 
     firebase.uploadData('classes/'+req.params.postId, data).then((error) => {
+        
+        if (error) {
+
+            Utils.logError(error)
+            
+            res.status(505).send(req.body)
+
+        } else {
+
+            Utils.log(JSON.stringify({ header: req.headers, body: req.body }))
+
+            res.status(200).send(req.body)
+        }
+    })
+        
+})
+
+app.post('/updateKeywords/:blogId/:postId', (req, res) => {
+
+    let blogId = req.params.blogId
+    let postId = req.params.postId
+
+    let keywords = JSON.parse(JSON.stringify(req.body))
+
+    firebase.uploadData('classes/'+blogId+'/posts/'+postId+'/keywords/', keywords).then((error) => {
         
         if (error) {
 
