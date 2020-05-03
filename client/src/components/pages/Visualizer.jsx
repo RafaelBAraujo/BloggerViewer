@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import VisualizerTemplate from '../templates/VisualizerTemplate'
 import LoadingScreen from '../molecules/LoadingScreen'
 
-import { uploadFile, uploadClass, downloadFile } from '../scripts'
+import { uploadFile, uploadClass, getStudentData } from '../scripts'
 
 class Visualizer extends Component {
 
@@ -11,6 +11,7 @@ class Visualizer extends Component {
         super(props)
         this.state = {
             data: {},
+            student: null,
             color: null
         }
     }
@@ -23,7 +24,7 @@ class Visualizer extends Component {
 
     getPostData = () => {
         console.log('fetching data...')
-        fetch('/visualizer/'+ this.props.blog +'/getLastPost')
+        fetch('/visualizer/lastBlog/getLastPost')
         .then(res => res.json())
         .then(data => this.setState({ data }))
     }
@@ -61,18 +62,36 @@ class Visualizer extends Component {
     }
 
     downloadSpreadsheet = () => {
-        console.log(this.state.data.post.id)
-        window.location.replace("http://localhost:5000/getSpreadsheet/" + this.state.data.post.id);
+        window.location.replace('http://localhost:5000/getSpreadsheet/'+this.state.data.blog.id+'/'+this.state.data.post.id)
+    }
+
+    getStudentData = (studentId) => {
+        getStudentData(this.state.data.blog.id, studentId)
+        .then(res => res.json())
+        .then((student) => {
+            this.setState({ student: student })
+            console.log(student)
+        })
     }
 
     render() {
 
         const { data } = this.state
+        const { student } = this.state
         
         return(
             <div>
                 {Object.entries(data).length !== 0 && data.constructor === Object ? (
-                        <VisualizerTemplate data={data} blogColor={this.state.color} classData={data.classroom} action={this.getPost} uploadClassDataAction={this.uploadClassData} uploadFileAction={this.uploadClassFile} downloadAction={this.downloadSpreadsheet}/>
+                        <VisualizerTemplate data={data}
+                                            student={student} 
+                                            blogColor={this.state.color} 
+                                            classData={data.classroom} 
+                                            action={this.getPost} 
+                                            uploadClassDataAction={this.uploadClassData} 
+                                            uploadFileAction={this.uploadClassFile} 
+                                            downloadAction={this.downloadSpreadsheet}
+                                            getStudentDataAction={this.getStudentData}
+                                            />
                     ) : (
                         <LoadingScreen />
                 )

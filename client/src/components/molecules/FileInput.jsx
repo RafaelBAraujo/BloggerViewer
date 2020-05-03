@@ -22,26 +22,18 @@ class FileInput extends React.Component {
             }
         }
 
-        this.downloadFile = (event) => {
-            
-            this.props.downloadAction()
-
-        }
-
     }
 
     render() {
         return (
             <div className="file-upload">
-                <h5>Upload da planilha</h5>
-                <div className="input-group fuck">
+                <div className="input-group">
                     <div className="custom-file">
                         <input id="classroom-file-input" type="file" className="custom-file-input" size="60" onChange={(event) => this.setFile(event)} />
                         <label id="classroom-file-input-label" className="custom-file-label" htmlFor="classroom-file-input">{this.state.file.name}</label>
                     </div>
                 </div>
                 <button className="btn btn-info" onClick={(event) => this.sendFile(event)}><i className="material-icons">cloud_upload</i>Upload</button>
-                <button className="btn btn-danger" onClick={(event) => this.downloadFile(event)}><i className="material-icons">save</i>Download</button>
             </div>
         )
     }

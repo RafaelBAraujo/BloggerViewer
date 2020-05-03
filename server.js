@@ -3,10 +3,11 @@ const env = require('custom-env').env('staging')
 const path = require('path')
 const fs = require('fs')
 const bodyParser = require('body-parser')
+const parse = require('csv-parse')
 const cors = require('cors')
 const xlsx = require('xlsx')
-var stream = require('stream');
 var mime = require('mime')
+var stream = require('stream');
 
 const app = express()
 
@@ -23,8 +24,10 @@ const BloggerRequestApi = require('./lib/blogger-request')
 const BloggerResponse = require('./lib/blogger-response')
 const Classroom = require('./lib/classroom')
 const Firebase = require('./lib/firebase')
+const Professor = require('./lib/professor')
 
 let firebase = new Firebase()
+let professor = new Professor(firebase)
 
 const hostname = process.env.HOSTNAME
 const port = process.env.PORT
@@ -34,15 +37,30 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 app.use(bodyParser.json({ limit: '10mb' }));
 
 const blogs = {}
+let lastUrl = ''
 blogs['adm_tec'] = 'https://adm-tecnic.blogspot.com/'
 blogs['adm_si'] = 'https://adm-bsi.blogspot.com'
 blogs['tgs'] = 'https://tgs-bsi.blogspot.com/'
 
-app.get('/visualizer/:blog/getLastPost', (req, res) => {
+app.post('/getBlogInfo/', (req, res) => {
 
-    let blogUrl = blogs[req.params.blog]
+    let body = JSON.parse(JSON.stringify(req.body))
+    lastUrl = body.blogUrl
 
-    BloggerRequestApi.getBlogId(blogUrl).then((blog) => {
+    BloggerRequestApi.getBlogId(body.blogUrl).then((blog) => {
+         BloggerRequestApi.getLastPost(blog.id).then((lastPost) => {
+             console.log(blog.id)
+             blog.lastPost = lastPost
+             res.json(blog)
+         })
+
+    })    
+
+})
+
+app.get('/visualizer/lastBlog/getLastPost', (req, res) => {
+
+    BloggerRequestApi.getBlogId(lastUrl).then((blog) => {
         BloggerRequestApi.getLastPost(blog.id).then((lastPost) => {
             BloggerRequestApi.getCommentsByPost(blog.id, lastPost.id).then((comments) => {
                 BloggerRequestApi.getPosts(blog.id).then((posts) => {
@@ -62,7 +80,7 @@ app.get('/visualizer/:blog/getLastPost', (req, res) => {
 
 app.get('/visualizer/:blog/getPost/:id', (req, res) => {
 
-    let start = new Date()
+    let start = new Date() 
 
     let blogUrl = blogs[req.params.blog]
     let postId = req.params.id
@@ -112,6 +130,18 @@ app.get('/visualizer/test', (req, res) => {
 
 })
 
+app.get('/analyseBlog/:blogId', (req, res) => {
+
+    let blogId = req.params.blogId
+
+    professor.analyseBlog(blogId).then(() => {
+
+        res.status(200).json({})
+
+    })
+
+})
+
 app.get('visualizer/mock', (req, res) => {
 
     res.json(BloggerMock.getPost())
@@ -130,8 +160,7 @@ var storage = multer.diskStorage({
 
 let upload = multer({ storage: storage }).single('file')
 
-app.post('/upload/:blogId', (req, res) => {
-
+app.post('/uploadSpreadsheet/:blogId', (req, res) => {
 
     upload(req, res, function (err) {
 
@@ -157,16 +186,85 @@ app.post('/upload/:blogId', (req, res) => {
                 }
             })
 
-            //firebase.uploadFile(req.file.path)
+            // firebase.uploadFile(req.file.path)
 
             let rs = fs.createReadStream(req.file.path)
 
-            // var rs = new stream.Readable({ objectMode: true });
+            // let rs = new stream.Readable({ objectMode: true });
             // rs.push(jstring)
             // rs.push(null)
 
 
-            firebase.uploadFileFromStream(rs, req.file.originalname+'.xlsx')
+            firebase.uploadFileFromStream(rs, req.params.blogId+'.xlsx')
+
+            return res.status(200).send(req.file)
+
+        }
+
+    })
+
+})
+
+app.post('/uploadConcepts/:blogId/:postId', (req, res) => {
+
+    let blogId = req.params.blogId
+    let postId = req.params.postId
+
+    let ignore = new Set(['da', 'de', 'do', 'das', 'dos', 'e'])
+
+    upload(req, res, function (err) {
+
+        if (err) {
+
+            return res.status(500).json(err)
+
+        } else {
+
+            let csvData = []
+            fs.createReadStream(req.file.path)
+            .pipe(parse({delimiter: ',', columns: true}))
+            .on('data', (csvRow) => {
+                let concepts = []
+                csvRow.conceito.split(' ').forEach((word) => {
+                    if(!ignore.has(word)) {
+                        concepts.push(word)
+                    }
+                })
+                csvData.push(concepts)
+            })
+            .on('end', () => {
+                BloggerRequestApi.getPostById(blogId, postId).then((post) => {
+                    firebase.uploadData('classes/'+blogId+'/posts/'+postId+'/numOfComments/', post.replies.totalItems)    
+                })
+                firebase.uploadData('classes/'+blogId+'/posts/'+postId+'/keywords/', csvData)
+                let rs = fs.createReadStream(req.file.path)
+                firebase.uploadFileFromStream(rs, req.file.originalname+'.'+mime.getExtension(req.file.mimetype))
+            })
+
+            return res.status(200).send(req.file)
+
+        }
+
+    })
+
+})
+
+app.post('/uploadFile/', (req, res) => {
+
+
+    upload(req, res, function (err) {
+
+        if (err instanceof multer.MulterError) {
+            return res.status(500).json(err)
+
+        } else if (err) {
+            console.log(err)
+            return res.status(500).json(err)
+
+        } else {
+
+            let rs = fs.createReadStream(req.file.path)
+            firebase.uploadFileFromStream(rs, req.file.originalname+'.'+mime.getExtension(req.file.mimetype))
 
             return res.status(200).send(req.file)
 
@@ -208,6 +306,95 @@ app.get('/getClassFile/:query', (req, res) => {
                 res.json(jsonObj)
             })
 
+    })
+
+})
+
+app.get('/getSpreadsheet/:blogId/:postId', (req, res) => {
+
+    let blogId = req.params.blogId
+    let postId = req.params.postId
+
+    firebase.downloadFile(blogId+'.xlsx').then((file) => {
+
+        let buffers = []
+
+        file.createReadStream()
+        .on('data', (data) => {
+            buffers.push(data)
+        })
+        .on('error', (error) => {
+            console.log('An error ocurred while reading the file stream.')
+            Utils.logError(error)
+        })
+        .on('end', () => {
+
+            firebase.downloadFile('blog_concepts_template.xlsx').then((templateFile) => {
+
+                let templateBuffers = []
+
+                templateFile.createReadStream()
+                .on('data', (data) => {
+                    templateBuffers.push(data)
+                })
+                .on('error', (error) => {
+                    console.log('An error ocurred while reading the file stream.')
+                    Utils.logError(error)
+                })
+                .on('end', () => {
+
+                    firebase.downloadData('classes/'+blogId+'/posts/'+postId+'/').then((post) => {
+                        firebase.downloadData('classes/'+blogId+'/students/').then((students) => {
+                            BloggerRequestApi.getPostById(blogId, postId).then((bloggerPost) => {
+                                BloggerRequestApi.getCommentsByPost(blogId, postId).then((comments) => {
+                                    firebase.downloadData('classes/'+blogId+'/studentsNames/students/').then((studentsNames) => {
+            
+                                        let parsedStudents = []
+            
+                                        studentsNames.forEach((student) => {
+                                            parsedStudents[student.RA] = { name: student.Nome }
+                                        })
+            
+                                        let commentsWorksheet = Utils.createCommentSheet(bloggerPost, comments, parsedStudents)
+            
+                                        let buffer = Buffer.concat(buffers)
+                                        let templateBuffer = Buffer.concat(templateBuffers)
+                                        // let data = Buffer.from(buffer, "base64")
+                                        // let classWorksheet = Utils.createClassSummarySheet(students, post, postId)
+                        
+                                        let workbook = xlsx.read(buffer, {type: 'buffer'})
+                                        let templateWorkbook = xlsx.read(templateBuffer, {type: 'buffer'})
+                                        let templateWorksheet = templateWorkbook.Sheets['Extracao_Blog']
+                                        
+                                        let extracaoBlogWorksheet = Utils.createClassSummarySheet(templateWorksheet, students, post, postId)
+
+                                        xlsx.utils.book_append_sheet(workbook, commentsWorksheet, 'Import_Blog_'+bloggerPost.title.split(' - ')[0])
+                                        xlsx.utils.book_append_sheet(workbook, extracaoBlogWorksheet, 'Extracao_Blog')
+                        
+                                        var workbookBuffer = xlsx.write(workbook, {
+                                            type: 'buffer'
+                                        })
+                    
+                                        let readStream = new stream.PassThrough()
+                                        readStream.end(workbookBuffer)
+                                            
+                                        res.setHeader('Content-Length', workbookBuffer.length)
+                                        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+                                        res.setHeader('Content-Disposition', 'attachment; filename=' + blogId + '.xlsx')
+                                        res.status(200)
+                                        // res.end(Buffer.from(workbookBuffer, 'base64'))
+                                        readStream.pipe(res)
+            
+                                    })
+                                })
+                            })
+                        })
+                    })
+                })
+            })
+
+        })
+            
     })
 
 })
@@ -310,6 +497,8 @@ app.post('/updateKeywords/:blogId/:postId', (req, res) => {
         } else {
 
             Utils.log(JSON.stringify({ header: req.headers, body: req.body }))
+
+            professor.analyseBlog(blogId)
 
             res.status(200).send(req.body)
         }

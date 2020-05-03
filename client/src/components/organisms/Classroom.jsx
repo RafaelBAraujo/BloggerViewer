@@ -6,7 +6,7 @@ import Node from '../molecules/Node'
 import IconButton from '../atoms/IconButton'
 import RoundPicture from '../atoms/RoundPicture'
 import NodeText from '../atoms/NodeText'
-import { cleanFilter } from '../scripts'
+import { cleanFilter, shortenAuthorName } from '../scripts'
 
 const url = '//lh3.googleusercontent.com/zFdxGE77vvD2w5xHy6jkVuElKv-U9_9qLkRYK8OnbDeJPtjSZ82UPq5w6hJ-SA=s35'
 
@@ -22,8 +22,6 @@ class Classroom extends Component {
             filteredStudents: this.props.classroom,
             file: 'undefined'
         }
-
-        
 
         this.queryStudent = (input) => {
 
@@ -56,6 +54,7 @@ class Classroom extends Component {
                 this.setState({
                     selectedStudent: [student]
                 })
+                this.props.getStudentDataAction(student.RA)
             }
         })
     }
@@ -106,7 +105,7 @@ class Classroom extends Component {
                             {this.state.filteredStudents.map((student) => {
                                 return (
                                     <div onClick={() => this.selectStudent(student.RA)} >
-                                        <Node key={++replyKeyCounter} imgSrc={url} imgAlt={''} text={student.Nome} />
+                                        <Node key={++replyKeyCounter} imgSrc={url} imgAlt={''} text={shortenAuthorName(student.Nome)} />
                                     </div>
                                 )
                             })}

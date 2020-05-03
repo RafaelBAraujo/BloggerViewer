@@ -17,7 +17,7 @@ class KeywordSetup extends Component {
                 let newKeyword = input.target.value
                 let currentKeywords = this.state.keywords
                 if(!currentKeywords.includes(newKeyword)) {
-                    currentKeywords.push(newKeyword)
+                    currentKeywords.push(newKeyword.toLowerCase())
                     updateKeywords(this.props.blogId, this.props.postId, currentKeywords)
                     this.setState({keywords: currentKeywords})
                 }

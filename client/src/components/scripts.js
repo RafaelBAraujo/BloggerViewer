@@ -259,6 +259,42 @@ export const search = (input) => {
 
 }
 
+export const validateBlogUrl = (blogUrl) => {
+
+    let isValid = true
+
+    if(typeof blogUrl === 'undefined' || blogUrl === null || blogUrl === '') {
+        isValid = false  
+    } 
+    else {
+        if((blogUrl.match(new RegExp(".blogspot.", "g")) || []).length === 0 ||
+           ((blogUrl.match(new RegExp("http://", "g")) || []).length === 0 && 
+            (blogUrl.match(new RegExp("https://", "g")) || []).length === 0) ||
+            (blogUrl.match(new RegExp(".com", "g")) || []).length === 0) {
+            isValid = false
+        }
+    }
+
+    return isValid
+
+}
+
+export const fetchBlog = async (blogUrl) => {
+
+    //console.log(JSON.parse(JSON.stringify(blogUrl)))
+    let res = await fetch('http://0.0.0.0:5000/getBlogInfo/', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: '{"blogUrl":"'+blogUrl+'"}'
+    })
+
+    return res
+
+}
+
 export const fetchPost = async (postId) => {
 
     let res = await fetch('/visualizer/getLastPost')
@@ -273,7 +309,7 @@ export const fetchPost = async (postId) => {
 
 import axios from 'axios'
 
-export const uploadFile = async (file, fileName, blogId) => {
+export const uploadSpredsheet = async (file, fileName, blogId) => {
 
     const data = new FormData()
 
@@ -281,7 +317,21 @@ export const uploadFile = async (file, fileName, blogId) => {
 
     Axios.toString()
 
-    let res = await axios.post("http://localhost:5000/upload/" + blogId, data, {})
+    let res = await axios.post("http://0.0.0.0:5000/uploadSpreadsheet/" + blogId, data, {})
+
+    return res
+
+}
+
+export const uploadConceptsFile = async (file, fileName, blogId, postId) => {
+
+    const data = new FormData()
+
+    data.append('file', file, fileName)
+
+    Axios.toString()
+
+    let res = await axios.post("http://0.0.0.0:5000/uploadConcepts/"+blogId+'/'+postId, data, {})
 
     return res
 
@@ -330,5 +380,48 @@ export const updateKeywords = async (blogId, postId, keywords) => {
     })
 
     return res
+
+}
+
+export const getStudentData = async (blogId, studentId) => {
+
+    let res = await fetch('http://localhost:5000/getStudent/'+blogId+'/'+studentId, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        }
+    })
+
+    return res
+
+}
+
+export const analyseBlog = async (blogId) => {
+
+    let res = await fetch('http://localhost:5000/analyseBlog/' + blogId, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        }
+    })
+
+    return res
+
+}
+
+export const shortenAuthorName = (name) => {
+
+    var names = name.split(' ')
+
+    if(names.length > 1)
+        return names[0] + ' ' + names[names.length-1]
+    
+    else if(names.length > 0 && names.length < 2)
+        return names[0]
+
+    else
+        return 'Unknown'
 
 }

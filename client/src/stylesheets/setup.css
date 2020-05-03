@@ -1,0 +1,31 @@
+.setup-page-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 95vh;
+    background-color: azure;
+}
+
+.input-url {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: center;
+    width: 60%;
+}
+
+.input {
+    width: 60%;
+}
+.input-url button{
+    align-self: center;
+    padding-top: 1%;
+    width: 10%;
+}
+
+.hidden {
+    transition: 500ms ease-in;
+    left: -100vw;
+    width: 0px;
+}

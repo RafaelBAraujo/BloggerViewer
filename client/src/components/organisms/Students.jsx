@@ -11,7 +11,7 @@ const Students = ({students, uploadClassDataAction}) => {
             <div id="students" className="students">
                 <button className="student-btn" onClick={openStudentComponent}>
                     <i className="material-icons">create</i>
-                    <i className="material-icons">fast_forward</i>
+                    
                 </button>
             </div>
             <Student students={students} uploadClassDataAction={uploadClassDataAction} />

@@ -6,7 +6,7 @@ const TextInput = ({placeholder}) => {
 
     return (
         <div className="email-input">
-            <input type="text" placeholder={placeholder}/>
+            <input id={placeholder+'-input'} type="text" placeholder={placeholder}/>
         </div>
     )
 

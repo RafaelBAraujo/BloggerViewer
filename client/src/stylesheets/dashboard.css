@@ -1,0 +1,40 @@
+.dashboard-card {
+    background-color: white;
+    margin: 1%;
+    width: 16vw;
+    height: 25vh;
+}
+
+.dashboard-card-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 25%;
+    width: 100%;
+    margin: 2%;
+}
+
+.dashboard-card-config {
+    margin-right: 2%;
+}
+
+.dashboard-card-title {
+    padding: .5%;
+    margin: 0;
+}
+
+.dashboard-card-body {
+    display: flex;
+    justify-content: center;
+    height: 75%;
+    width: 80%;
+    padding: 1%;
+}
+
+.dashboard-card-icon {
+    font-size: 2.5em;
+}
+
+.dashboard-card-value {
+    font-size: 3.5em;
+}
