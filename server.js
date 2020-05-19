@@ -71,6 +71,7 @@ app.post('/getPostInfo/', (req, res) => {
 
 app.get('/visualizer/lastBlog/getLastPost', (req, res) => {
 
+
     BloggerRequestApi.getBlogId(lastUrl).then((blog) => {
         BloggerRequestApi.getLastPost(blog.id).then((lastPost) => {
             BloggerRequestApi.getCommentsByPost(blog.id, lastPost.id).then((comments) => {
@@ -93,7 +94,7 @@ app.get('/visualizer/:blog/getPost/:id', (req, res) => {
 
     let start = new Date() 
 
-    let blogUrl = blogs[req.params.blog]
+    let blogUrl = 'https://bsi-administra.blogspot.com/'
     let postId = req.params.id
 
     BloggerRequestApi.getBlogId(blogUrl).then((blog) => {

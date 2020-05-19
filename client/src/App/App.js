@@ -26,9 +26,18 @@ class App extends PureComponent {
 				<Switch>
 					<Route exact path='/' component={() => <Setup setBlogAction={this.setBlogUrl} />}/>
 					<Route exact path='/home' component={Home}/>
-					<Route exact path='/visualizer' component={() => <Visualizer />}/>
-					{/* <Route exact path='/visualizer/adm_si' component={() => <Visualizer blog={this.blogUrl} />}/>
-					<Route exact path='/visualizer/tgs' component={() => <Visualizer blog={this.blogUrl} />}/> */}
+					<Route 
+						exact 
+						path='/visualizer' 
+						component={() => <Visualizer />}/>
+					<Route 
+						exact 
+						path='/visualizer/:blogId' 
+						component={(props) => <Visualizer {...props} />}/>
+					<Route 
+						exact 
+						path='/visualizer/:blogId/:postId' 
+						component={(props) => <Visualizer {...props} />}/>
 				</Switch>
 			</div>
 	)

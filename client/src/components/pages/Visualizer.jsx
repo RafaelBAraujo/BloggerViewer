@@ -11,6 +11,7 @@ class Visualizer extends Component {
         super(props)
         this.state = {
             data: {},
+            postId: null,
             student: null,
             color: null
         }
@@ -18,21 +19,32 @@ class Visualizer extends Component {
 
     componentDidMount() {
         console.log('mounted')
+        
         this.setState({ color: '#90A4AE' })
-        this.getPostData()
+        if(typeof this.props.match !== 'undefined') {
+            const { blogId } = this.props.match.params
+            const { postId } = this.props.match.params
+            if(blogId && postId) {
+                this.getPost(blogId, postId)
+            } else {
+                this.getPostData()
+            }
+        } else {
+            this.getPostData()
+        }
+
     }
 
     getPostData = () => {
-        console.log('fetching data...')
         fetch('/visualizer/lastBlog/getLastPost')
         .then(res => res.json())
         .then(data => this.setState({ data }))
     }
 
-    getPost = (postId) => {
+    getPost = (blogId, postId) => {
         this.setState({ data: {} })
         console.log('fetching data...')
-        fetch('/visualizer/'+ this.props.blog +'/getPost/' + postId)
+        fetch('/visualizer/'+ blogId +'/getPost/' + postId)
         .then(res => res.json())
         .then(data => this.setState({ data }))
     }
