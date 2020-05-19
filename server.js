@@ -48,7 +48,7 @@ app.post('/getBlogInfo/', (req, res) => {
     lastUrl = body.blogUrl
 
     BloggerRequestApi.getBlogId(body.blogUrl).then((blog) => {
-         BloggerRequestApi.getLastPost(blog.id).then((lastPost) => {
+         BloggerRequestApi.getPostById(blog.id, '9007137552878238529').then((lastPost) => {
              console.log(blog.id)
              blog.lastPost = lastPost
              res.json(blog)
@@ -210,7 +210,7 @@ app.post('/uploadConcepts/:blogId/:postId', (req, res) => {
     let blogId = req.params.blogId
     let postId = req.params.postId
 
-    let ignore = new Set(['da', 'de', 'do', 'das', 'dos', 'e'])
+    let ignore = new Set(['da', 'de', 'do', 'das', 'dos', 'e', 'em', 'o'])
 
     upload(req, res, function (err) {
 

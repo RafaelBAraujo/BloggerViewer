@@ -91,6 +91,7 @@ class Setup extends Component {
         if(typeof file !== 'undefined' && file !== null)
         {
             this.setState({ isLoading: true })
+            // uploadConceptsFile(file, this.state.blogData.lastPost.id+'_concepts', this.state.blogData.id, this.state.blogData.lastPost.id)
             uploadConceptsFile(file, this.state.blogData.lastPost.id+'_concepts', this.state.blogData.id, this.state.blogData.lastPost.id)
             .then((res) => {
                 console.log(res)
