@@ -9,8 +9,7 @@ import FileInput from '../molecules/FileInput'
 import TextInput from '../atoms/TextInput'
 import Button from '../atoms/Button'
 import LoadingScreen from '../molecules/LoadingScreen'
-import { uploadSpredsheet, uploadConceptsFile, fetchBlog, analyseBlog, validateBlogUrl } from '../scripts.js'
-import Visualizer from './Visualizer'
+import { uploadSpredsheet, uploadConceptsFile, fetchBlog, fetchPostById, analyseBlog, validateBlogUrl } from '../scripts.js'
 
 class Setup extends Component {
 
@@ -19,6 +18,7 @@ class Setup extends Component {
         this.state = {
             isLoading: false,
             blogData: {},
+            posts: [],
             spreadsheetFile: {},
             conceptsFile: {}
         }
@@ -37,13 +37,17 @@ class Setup extends Component {
         this.phase++
         if(this.phase === 1)
         {
-            document.getElementsByClassName('concept-input')[0].classList.toggle('hidden')
+            document.getElementsByClassName('post-input')[0].classList.toggle('hidden')
         }
         else if(this.phase === 2)
         {
-            document.getElementsByClassName('spreadsheet-input')[0].classList.toggle('hidden')
+            document.getElementsByClassName('concept-input')[0].classList.toggle('hidden')
         }
         else if(this.phase === 3)
+        {
+            document.getElementsByClassName('spreadsheet-input')[0].classList.toggle('hidden')
+        }
+        else if(this.phase === 4)
         {
             document.getElementsByClassName('download-button')[0].classList.toggle('hidden')
         }
@@ -58,13 +62,36 @@ class Setup extends Component {
             fetchBlog(blogUrl)
             .then((res) => res.json())
             .then((blogData) => {
-                this.setState({ blogData: blogData, isLoading: false })
+                let posts = []
+                blogData.posts.forEach((post) => {
+                    posts.push({
+                        postId: post.id,
+                        postTitle: post.title
+                    })
+                })
+                this.setState({ blogData: blogData, posts: posts, isLoading: false })
                 this.next()
             })
         }
         else
         {
             toast('Preencha o campo com uma URL válida!', { position: this.toastOptions.position, autoClose: this.toastOptions.autoClose })
+        }
+    }
+
+    getPostInfo = () => {
+        let postPicklist = document.getElementById('post-picklist')
+        let selectedPost = postPicklist.options[postPicklist.selectedIndex].value;
+        if(selectedPost !== 0) {
+            this.setState({ isLoading: true })
+            fetchPostById(this.state.blogData.id, selectedPost)
+            .then((res) => res.json())
+            .then((post) => {
+                let blogData = this.state.blogData
+                blogData.post = post
+                this.setState({ blogData: blogData, isLoading: false })
+                this.next()
+            })
         }
     }
 
@@ -92,7 +119,7 @@ class Setup extends Component {
         {
             this.setState({ isLoading: true })
             // uploadConceptsFile(file, this.state.blogData.lastPost.id+'_concepts', this.state.blogData.id, this.state.blogData.lastPost.id)
-            uploadConceptsFile(file, this.state.blogData.lastPost.id+'_concepts', this.state.blogData.id, this.state.blogData.lastPost.id)
+            uploadConceptsFile(file, this.state.blogData.post.id+'_concepts', this.state.blogData.id, this.state.blogData.post.id)
             .then((res) => {
                 console.log(res)
                 if(res.statusText === 'OK') {
@@ -126,12 +153,31 @@ class Setup extends Component {
                 <ToastContainer hideProgressBar={true} />
                 {!isLoading ? (
                     <div class="setup-page-body">
+
                         <div class="input-url hidden">
                             <div class="input">
                                 <label className="login-input-label">URL do blog</label>
                                 <TextInput placeholder="URL" />
                             </div>
                             <IconButton icon="keyboard_return" onClick={this.getBlogInfo} />
+                        </div>
+
+                        <div class="post-input hidden">
+                            <div class="input">
+                                <h5>Selecione o post para análise</h5>
+                                <select id="post-picklist">
+                                    {this.state.posts.length !== 0 ? (
+                                        this.state.posts.map((post) => {
+                                            return (
+                                                <option value={post.postId}>{post.postTitle}</option>
+                                            )
+                                        })
+                                    ) : (
+                                        <option value={0}>{}</option>
+                                    )}
+                                </select>
+                            </div>
+                            <IconButton icon="keyboard_return" onClick={this.getPostInfo} />
                         </div>
 
                         <div class="file-input hidden spreadsheet-input">

@@ -48,13 +48,24 @@ app.post('/getBlogInfo/', (req, res) => {
     lastUrl = body.blogUrl
 
     BloggerRequestApi.getBlogId(body.blogUrl).then((blog) => {
-         BloggerRequestApi.getPostById(blog.id, '9007137552878238529').then((lastPost) => {
-             console.log(blog.id)
-             blog.lastPost = lastPost
-             res.json(blog)
-         })
-
+        BloggerRequestApi.getPosts(blog.id).then((posts) => {
+            console.log(blog.id)
+            blog.posts = posts
+            res.json(blog)
+        })
     })    
+
+})
+
+app.post('/getPostInfo/', (req, res) => {
+
+    let body = JSON.parse(JSON.stringify(req.body))
+    let blogId = body.blogId
+    let postId = body.postId
+
+    BloggerRequestApi.getPostById(blogId, postId).then((post) => {
+        res.json(post)
+    })
 
 })
 

@@ -295,6 +295,21 @@ export const fetchBlog = async (blogUrl) => {
 
 }
 
+export const fetchPostById = async (blogId, postId) => {
+
+    let res = await fetch('http://0.0.0.0:5000/getPostInfo/', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: '{"blogId":"'+blogId+'", "postId": "'+postId+'"}'
+    })
+
+    return res
+
+}
+
 export const fetchPost = async (postId) => {
 
     let res = await fetch('/visualizer/getLastPost')
