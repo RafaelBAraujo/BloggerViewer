@@ -139,7 +139,7 @@ class Setup extends Component {
         analyseBlog(this.state.blogData.id)
         .then((res) => {
             if(res.status === 200) {
-                window.location.replace("./visualizer");
+                window.location.replace('./visualizer/'+this.state.blogData.id+'/'+this.state.blogData.post.id);
             }
         })
     }
@@ -165,7 +165,7 @@ class Setup extends Component {
                         <div class="post-input hidden">
                             <div class="input">
                                 <h5>Selecione o post para análise</h5>
-                                <select id="post-picklist">
+                                <select class="form-control" id="post-picklist">
                                     {this.state.posts.length !== 0 ? (
                                         this.state.posts.map((post) => {
                                             return (
