@@ -1,9 +1,5 @@
 import React from 'react'
 
-
-
-import ConfigButton from '../atoms/ConfigButton'
-
 const Card = ({title, value, icon}) => {
 
     return (

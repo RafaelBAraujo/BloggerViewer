@@ -426,6 +426,26 @@ export const analyseBlog = async (blogId) => {
 
 }
 
+export const sendRegexList = async (blogId, postId, regexList) => {
+
+    console.log(JSON.stringify(regexList))
+    let res = await fetch('http://localhost:5000/updateRegex/', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            blogId: blogId,
+            postId: postId,
+            regexList: regexList
+        })
+    })
+
+    return res
+
+}
+
 export const shortenAuthorName = (name) => {
 
     var names = name.split(' ')

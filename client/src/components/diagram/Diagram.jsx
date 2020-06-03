@@ -1,7 +1,5 @@
 import React from 'react';
 
-import ClassSummary from '../molecules/ClassSummary'
-import KeywordBadge from '../atoms/KeywordBadge';
 import KeywordSetup from '../organisms/KeywordSetup';
 
 

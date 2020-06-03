@@ -141,6 +141,7 @@
 
 .classroom-nav {
     grid-column: 1;
+    /* autoprefixer: off */
     grid-row: 2 / 4;
 
     background-color: #eeeeee;
@@ -156,6 +157,7 @@
 
 .students-list {
     grid-column: 2;
+    /* autoprefixer: off */
     grid-row: 2 / 4;
     display:flex; flex-flow: column; align-items: center;
     height: 92vh;

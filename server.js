@@ -236,29 +236,59 @@ app.post('/uploadConcepts/:blogId/:postId', (req, res) => {
             fs.createReadStream(req.file.path)
             .pipe(parse({delimiter: ',', columns: true}))
             .on('data', (csvRow) => {
+
                 let concepts = []
-                csvRow.conceito.split(' ').forEach((word) => {
-                    if(!ignore.has(word)) {
-                        concepts.push(word)
-                    }
-                })
-                csvData.push(concepts)
+                // let bracketWords = csvRow.conceito.match(/\[(.*?)\]/)
+                // if(bracketWords) {
+
+                //     bracketWords = bracketWords[0].split('|')
+                //     bracketWords.forEach((word) => {
+                //         if(!ignore.has(word)) {
+                //             word = word.replace('[', '')
+                //             word = word.replace(']', '')
+                //             concepts.push(word+'/bw')
+                //         }
+                //     })
+                // }
+
+
+                // let words = csvRow.conceito.split('[')[0]
+
+                // csvRow.conceito.forEach((word) => {
+                //     if(!ignore.has(word)) {
+                //         concepts.push(word)
+                //     }
+                // })
+
+                csvData.push({ keyword: csvRow.conceito, regexList: []})
+
             })
             .on('end', () => {
                 BloggerRequestApi.getPostById(blogId, postId).then((post) => {
                     firebase.uploadData('classes/'+blogId+'/posts/'+postId+'/numOfComments/', post.replies.totalItems)    
                 })
+                console.log(csvData)
                 firebase.uploadData('classes/'+blogId+'/posts/'+postId+'/keywords/', csvData)
+                console.log('blogId: ' + blogId + ' postId: ' + postId)
                 let rs = fs.createReadStream(req.file.path)
                 firebase.uploadFileFromStream(rs, req.file.originalname+'.'+mime.getExtension(req.file.mimetype))
+                return res.status(200).json(csvData)
             })
-
-            return res.status(200).send(req.file)
 
         }
 
     })
 
+})
+
+app.post('/updateRegex/', (req, res) => {
+
+    let body = JSON.parse(JSON.stringify(req.body))
+
+    console.log(body)
+    firebase.uploadData('/classes/'+body.blogId+'/posts/'+body.postId+'/keywords/', body.regexList)
+
+    res.status(200).send(req.body)
 })
 
 app.post('/uploadFile/', (req, res) => {

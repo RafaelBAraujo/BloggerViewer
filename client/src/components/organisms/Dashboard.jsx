@@ -1,9 +1,9 @@
-import React, {Component} from 'react'
+import React from 'react'
 import { Form } from 'react-bootstrap'
 
 import Card from '../dashboard/Card'
 
-import Chart from 'chart.js'
+// import Chart from 'chart.js'
 
 const Dashboard = ({student, currentPostId, postList}) => {
 

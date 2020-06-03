@@ -9,7 +9,8 @@ import FileInput from '../molecules/FileInput'
 import TextInput from '../atoms/TextInput'
 import Button from '../atoms/Button'
 import LoadingScreen from '../molecules/LoadingScreen'
-import { uploadSpredsheet, uploadConceptsFile, fetchBlog, fetchPostById, analyseBlog, validateBlogUrl } from '../scripts.js'
+import ConceptSetup from './ConceptSetup'
+import { uploadSpredsheet, uploadConceptsFile, fetchBlog, fetchPostById, analyseBlog, validateBlogUrl, sendRegexList } from '../scripts.js'
 
 class Setup extends Component {
 
@@ -20,7 +21,9 @@ class Setup extends Component {
             blogData: {},
             posts: [],
             spreadsheetFile: {},
-            conceptsFile: {}
+            conceptsFile: {},
+            concepts: [],
+            conceptRegex: {}
         }
         this.toastOptions = {
             position: 'top-center',
@@ -33,22 +36,41 @@ class Setup extends Component {
         document.getElementsByClassName('input-url')[0].classList.toggle('hidden')
     }
 
+    updateRegexList = (concept, regexList) => {
+        let concepts = this.state.concepts
+        concepts.forEach((el) => {
+            if(el.keyword === concept) {
+                el.regexList = regexList
+            }
+        })
+        this.setState({ concepts: concepts })
+    }
+
     next = () => {
         this.phase++
         if(this.phase === 1)
         {
+            console.log('phase: ' + this.phase)
             document.getElementsByClassName('post-input')[0].classList.toggle('hidden')
         }
         else if(this.phase === 2)
         {
+            console.log('phase: ' + this.phase)
             document.getElementsByClassName('concept-input')[0].classList.toggle('hidden')
         }
         else if(this.phase === 3)
         {
-            document.getElementsByClassName('spreadsheet-input')[0].classList.toggle('hidden')
+            console.log('phase: ' + this.phase)
+            document.getElementsByClassName('concept-setup')[0].classList.toggle('hidden')
         }
         else if(this.phase === 4)
         {
+            console.log('phase: ' + this.phase)
+            document.getElementsByClassName('spreadsheet-input')[0].classList.toggle('hidden')
+        }
+        else if(this.phase === 5)
+        {
+            console.log('phase: ' + this.phase)
             document.getElementsByClassName('download-button')[0].classList.toggle('hidden')
         }
     }
@@ -121,9 +143,8 @@ class Setup extends Component {
             // uploadConceptsFile(file, this.state.blogData.lastPost.id+'_concepts', this.state.blogData.id, this.state.blogData.lastPost.id)
             uploadConceptsFile(file, this.state.blogData.post.id+'_concepts', this.state.blogData.id, this.state.blogData.post.id)
             .then((res) => {
-                console.log(res)
                 if(res.statusText === 'OK') {
-                    this.setState({ conceptsFile: file, isLoading: false })
+                    this.setState({ conceptsFile: file, concepts: Array.from(res.data), isLoading: false })
                     this.next()
                 }
             })
@@ -132,6 +153,15 @@ class Setup extends Component {
         {
             toast('Selecione um arquivo para fazer upload!', { position: this.toastOptions.position, autoClose: this.toastOptions.autoClose })
         }
+    }
+
+    saveConceptRegex = () => {
+        this.setState({ isLoading: true })
+        sendRegexList(this.state.blogData.id, this.state.blogData.post.id, this.state.concepts)
+        .then((res) => {
+            this.setState({ isLoading: false })
+            this.next()
+        })
     }
 
     startAnalysis = () => {
@@ -152,24 +182,24 @@ class Setup extends Component {
             <div>
                 <ToastContainer hideProgressBar={true} />
                 {!isLoading ? (
-                    <div class="setup-page-body">
+                    <div className="setup-page-body">
 
-                        <div class="input-url hidden">
-                            <div class="input">
+                        <div className="input-url hidden">
+                            <div className="input">
                                 <label className="login-input-label">URL do blog</label>
                                 <TextInput placeholder="URL" />
                             </div>
                             <IconButton icon="keyboard_return" onClick={this.getBlogInfo} />
                         </div>
 
-                        <div class="post-input hidden">
-                            <div class="input">
+                        <div className="post-input hidden">
+                            <div className="input">
                                 <h5>Selecione o post para análise</h5>
-                                <select class="form-control" id="post-picklist">
+                                <select className="form-control" id="post-picklist">
                                     {this.state.posts.length !== 0 ? (
                                         this.state.posts.map((post) => {
                                             return (
-                                                <option value={post.postId}>{post.postTitle}</option>
+                                                <option key={post.postId} value={post.postId}>{post.postTitle}</option>
                                             )
                                         })
                                     ) : (
@@ -180,17 +210,22 @@ class Setup extends Component {
                             <IconButton icon="keyboard_return" onClick={this.getPostInfo} />
                         </div>
 
-                        <div class="file-input hidden spreadsheet-input">
+                        <div className="file-input hidden spreadsheet-input">
                             <h5>Selecione a planilha .XLSX de notas</h5>
                             <FileInput action={this.uploadSpreadsheet} />
                         </div>
 
-                        <div class="file-input hidden concept-input">
+                        <div className="file-input hidden concept-input">
                             <h5>Selecione um arquivo .CSV com os conceitos</h5>
                             <FileInput action={this.uploadConcepts}/>
                         </div>
 
-                        <div class="download-button hidden">
+                        <div className="concept-setup hidden">
+                            <ConceptSetup concepts={this.state.concepts} updateRegexList={this.updateRegexList} />
+                            <button className="testt btn btn-secondary" onClick={this.saveConceptRegex}>Salvar</button>
+                        </div>
+
+                        <div className="download-button hidden">
                             <Button label="Baixar análise do blog" onClick={this.startAnalysis} />
                         </div>
                     </div>

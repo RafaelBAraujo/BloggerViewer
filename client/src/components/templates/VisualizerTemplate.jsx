@@ -9,7 +9,6 @@ import Drawer from '../../components/organisms/Drawer'
 import Diagram from '../../components/diagram/Diagram'
 import Dashboard from '../organisms/Dashboard'
 import Post from '../../components/organisms/Post'
-import Students from '../organisms/Students'
 import StudentsList from '../molecules/StudentsList'
 import Tag from '../atoms/Tag'
 
