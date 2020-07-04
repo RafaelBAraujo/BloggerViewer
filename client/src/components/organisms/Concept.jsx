@@ -9,7 +9,7 @@ class Concept extends Component {
             id: this.props.id,
             concept: this.props.concept,
             conceptIndex: this.props.conceptIndex,
-            regexList: [],
+            regexList: this.props.concept.regexList,
             test: 0
         }
     }
@@ -66,7 +66,7 @@ class Concept extends Component {
                 <input className="concept-display" type="text" readOnly={true} value={this.state.concept.keyword}/>
                 {this.state.regexList.map((el, i) => {
                     return(
-                        <ConceptInput id={i} key={i} weight={el.weight} concept={this.state.concept} updateWeight={this.updateWeight} saveRegex={this.saveRegex} />
+                        <ConceptInput id={i} key={i} weight={el.weight} regex={el.regex} concept={this.state.concept} updateWeight={this.updateWeight} saveRegex={this.saveRegex} />
                     )
                 })}
                 <input type="button" id={this.props.conceptIndex+'add-btn'} className="hidden-button concept-btn btn-secondary" onClick={this.addRegex} value={'+'} />

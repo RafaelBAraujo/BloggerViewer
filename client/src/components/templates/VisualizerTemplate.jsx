@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import Classroom from '../../components/organisms/Classroom'
 import MenuBar from '../../components/molecules/MenuBar'
 import Drawer from '../../components/organisms/Drawer'
-import Diagram from '../../components/diagram/Diagram'
+//import Diagram from '../../components/diagram/Diagram'
 import Dashboard from '../organisms/Dashboard'
 import Post from '../../components/organisms/Post'
 import StudentsList from '../molecules/StudentsList'
@@ -30,7 +30,7 @@ const VisualizerTemplate = ({data, student, blogColor, action, uploadClassDataAc
             <Tag downloadAction={downloadAction} />
             <ToastContainer hideProgressBar={true} />
             <Drawer postsList={data.postList} action={action} />
-            <Diagram keywords={data.post.keywords} blogId={data.blog.id} postId={data.post.id}/>
+            {/* <Diagram keywords={data.post.keywords} blogId={data.blog.id} postId={data.post.id}/> */}
             <Dashboard student={student} currentPostId={data.post.id} postList={data.postList}/>
             <Post title={data.post.title} content={data.post.content} comments={data.post.comments}/>
         

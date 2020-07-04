@@ -94,10 +94,12 @@ app.get('/visualizer/:blog/getPost/:id', (req, res) => {
 
     let start = new Date() 
 
-    let blogUrl = 'https://bsi-administra.blogspot.com/'
+    // let blogUrl = 'https://bsi-administra.blogspot.com/'
+    let blog = {}
+    blog.id = req.params.blog
     let postId = req.params.id
 
-    BloggerRequestApi.getBlogId(blogUrl).then((blog) => {
+    // BloggerRequestApi.getBlogId(blogUrl).then((blog) => {
         BloggerRequestApi.getPostById(blog.id, postId).then((fetchedPost) => {
             BloggerRequestApi.getCommentsByPost(blog.id, fetchedPost.id).then((comments) => {
                 BloggerRequestApi.getPosts(blog.id).then((posts) => {
@@ -114,7 +116,7 @@ app.get('/visualizer/:blog/getPost/:id', (req, res) => {
                 })
             })
         })
-    })
+    // })
 
 })
 
@@ -237,30 +239,25 @@ app.post('/uploadConcepts/:blogId/:postId', (req, res) => {
             .pipe(parse({delimiter: ',', columns: true}))
             .on('data', (csvRow) => {
 
-                let concepts = []
-                // let bracketWords = csvRow.conceito.match(/\[(.*?)\]/)
-                // if(bracketWords) {
+                let data = { keyword: '', regexList: [] }
+                Object.keys(csvRow).forEach((csvColumn) => {
+                    if(csvColumn.length > 2) {
+                        data.keyword = csvRow[csvColumn]
+                    } else {
+                        if(csvRow[csvColumn].length > 0 && csvRow[csvColumn] != 'undefined') {
+                            let regexObj = { options: { sameSentence: false }, regex: '', weight: 1}
+                            let regexSplit = csvRow[csvColumn].split('weight:')
+                            regexObj.regex = regexSplit[0]
+                            regexObj.weight = regexSplit[1]
+                            data.regexList.push(regexObj)
+                        }
+                    }
+                })
 
-                //     bracketWords = bracketWords[0].split('|')
-                //     bracketWords.forEach((word) => {
-                //         if(!ignore.has(word)) {
-                //             word = word.replace('[', '')
-                //             word = word.replace(']', '')
-                //             concepts.push(word+'/bw')
-                //         }
-                //     })
-                // }
-
-
-                // let words = csvRow.conceito.split('[')[0]
-
-                // csvRow.conceito.forEach((word) => {
-                //     if(!ignore.has(word)) {
-                //         concepts.push(word)
-                //     }
-                // })
-
-                csvData.push({ keyword: csvRow.conceito, regexList: []})
+                console.log('data:')
+                console.log(JSON.stringify(data))
+                
+                csvData.push(data)
 
             })
             .on('end', () => {
@@ -410,7 +407,9 @@ app.get('/getSpreadsheet/:blogId/:postId', (req, res) => {
                                         
                                         let extracaoBlogWorksheet = Utils.createClassSummarySheet(templateWorksheet, students, post, postId)
 
-                                        xlsx.utils.book_append_sheet(workbook, commentsWorksheet, 'Import_Blog_'+bloggerPost.title.split(' - ')[0])
+                                        let sheetName = 'Import_Blog_'+bloggerPost.title.split(' - ')[0]
+                                        if(sheetName.length >= 31) { sheetName = sheetName.substr(0, 30) }
+                                        xlsx.utils.book_append_sheet(workbook, commentsWorksheet, sheetName)
                                         xlsx.utils.book_append_sheet(workbook, extracaoBlogWorksheet, 'Extracao_Blog')
                         
                                         var workbookBuffer = xlsx.write(workbook, {

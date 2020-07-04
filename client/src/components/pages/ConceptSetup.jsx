@@ -19,7 +19,7 @@ class ConceptSetup extends Component {
         let key = 0
         return(
             <div className="concepts">
-                <h1 className="concepts-header">Concepts</h1>
+                <h1 className="concepts-header">Conceitos</h1>
 
                 <div className="concept-list">
                     {this.state.concepts.map((concept, index) => {

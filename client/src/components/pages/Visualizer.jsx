@@ -74,6 +74,7 @@ class Visualizer extends Component {
     }
 
     downloadSpreadsheet = () => {
+        console.log(this.state.data.blog.id)
         window.location.replace('http://localhost:5000/getSpreadsheet/'+this.state.data.blog.id+'/'+this.state.data.post.id)
     }
 
