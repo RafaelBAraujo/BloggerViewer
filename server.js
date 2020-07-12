@@ -69,6 +69,10 @@ app.post('/getPostInfo/', (req, res) => {
 
 })
 
+app.get('/', (req, res) => {
+    res.json([])
+})
+
 app.get('/visualizer/lastBlog/getLastPost', (req, res) => {
 
 
@@ -218,6 +222,7 @@ app.post('/uploadSpreadsheet/:blogId', (req, res) => {
     })
 
 })
+
 
 app.post('/uploadConcepts/:blogId/:postId', (req, res) => {
 
