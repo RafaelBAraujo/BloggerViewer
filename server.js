@@ -4,6 +4,8 @@ const path = require('path')
 const fs = require('fs')
 const bodyParser = require('body-parser')
 const parse = require('csv-parse')
+const Lazy = require('lazy');
+const readline = require('readline');
 const cors = require('cors')
 const xlsx = require('xlsx')
 var mime = require('mime')
@@ -223,6 +225,43 @@ app.post('/uploadSpreadsheet/:blogId', (req, res) => {
 
 })
 
+app.post('/uploadMeet/:blogId/:postId', (req, res) => {
+
+    let blogId = req.params.blogId
+    let postId = req.params.postId
+
+    upload(req, res, function (err) {
+
+        if (err) {
+
+            return res.status(500).json(err)
+
+        } else {
+
+            let csvData = []
+            console.log('ora, porra')
+            let lineReader = readline.createInterface({
+                input: fs.createReadStream(req.file.path)
+            })
+            lineReader.on('line', (line) => {
+                console.log(line)
+                csvData.push(line)
+            })
+            lineReader.on('close', () => {
+                
+            })
+            // new Lazy(fs.createReadStream(req.file.path)).lines.forEach((line) => {
+            //     console.log(line)
+            //     csvData.push(line)
+            // }).on('end', () => {
+            //     console.log(csvData)
+            // })
+
+        }
+
+    })
+
+})
 
 app.post('/uploadConcepts/:blogId/:postId', (req, res) => {
 

@@ -358,6 +358,20 @@ export const uploadConceptsFile = async (file, fileName, blogId, postId) => {
 
 }
 
+export const uploadMeetFile = async (file, fileName, blogId, postId) => {
+
+    const data = new FormData()
+
+    data.append('file', file, fileName)
+
+    Axios.toString()
+
+    let res = await axios.post("http://"+server+":"+serverPort+"/uploadMeet/"+blogId+'/'+postId, data, {})
+
+    return res
+
+}
+
 export const downloadFile = async (fileName) => {
 
     let file = await setTimeout(() => {

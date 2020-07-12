@@ -13,7 +13,7 @@ import TextInput from '../atoms/TextInput'
 import Button from '../atoms/Button'
 import LoadingScreen from '../molecules/LoadingScreen'
 import ConceptSetup from './ConceptSetup'
-import { uploadSpredsheet, uploadConceptsFile, fetchBlog, fetchPostById, analyseBlog, validateBlogUrl, sendRegexList } from '../scripts.js'
+import { uploadSpredsheet, uploadConceptsFile, uploadMeetFile, fetchBlog, fetchPostById, analyseBlog, validateBlogUrl, sendRegexList } from '../scripts.js'
 
 class Setup extends Component {
 
@@ -25,6 +25,8 @@ class Setup extends Component {
             posts: [],
             spreadsheetFile: {},
             conceptsFile: {},
+            meetFile: {},
+            meetdata: [],
             concepts: [],
             conceptRegex: {},
             csvData: [],
@@ -129,6 +131,10 @@ class Setup extends Component {
         }
         else if (this.phase === 5) {
             console.log('phase: ' + this.phase)
+            document.getElementsByClassName('meet-input')[0].classList.toggle('hidden')
+        }
+        else if (this.phase === 6) {
+            console.log('phase: ' + this.phase)
             document.getElementsByClassName('download-button')[0].classList.toggle('hidden')
         }
     }
@@ -207,6 +213,24 @@ class Setup extends Component {
         }
     }
 
+    uploadMeet = (file) => {
+
+        if (typeof file !== 'undefined' && file !== null) {
+            this.setState({ isLoading: true })
+            uploadMeetFile(file, this.state.blogData.post.id + '_meet', this.state.blogData.id, this.state.blogData.post.id)
+            .then((res) => {
+                if (res.statusText === 'OK') {
+                    this.setState({ meetFile: file, meetData: Array.from(res.data), isLoading: false })
+                    this.next()
+                }
+            })
+        }
+        else {
+            toast('Selecione um arquivo para fazer upload!', { position: this.toastOptions.position, autoClose: this.toastOptions.autoClose })
+        }
+
+    }
+
     saveConceptRegex = () => {
         this.setState({ isLoading: true })
         sendRegexList(this.state.blogData.id, this.state.blogData.post.id, this.state.concepts)
@@ -270,6 +294,11 @@ class Setup extends Component {
                         <div className="file-input hidden concept-input">
                             <h5>Selecione um arquivo .CSV com os conceitos</h5>
                             <FileInput action={this.uploadConcepts} />
+                        </div>
+
+                        <div className="file-input hidden meet-input">
+                            <h5>Selecione o arquivo do último Meet</h5>
+                            <FileInput action={this.uploadMeet} />
                         </div>
 
                         <div className="concept-setup hidden">
