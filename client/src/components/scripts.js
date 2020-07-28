@@ -1,5 +1,8 @@
 import Axios from 'axios';
 
+const server = 'geicon.ft.unicamp.br'
+const serverPort = '3030'
+
 export const goToPreviousPage = () => {
     window.history.back()
 }
@@ -282,7 +285,8 @@ export const validateBlogUrl = (blogUrl) => {
 export const fetchBlog = async (blogUrl) => {
 
     //console.log(JSON.parse(JSON.stringify(blogUrl)))
-    let res = await fetch('http://0.0.0.0:5000/getBlogInfo/', {
+
+    let res = await fetch('http://'+server+':'+serverPort+'/getBlogInfo/', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -297,7 +301,7 @@ export const fetchBlog = async (blogUrl) => {
 
 export const fetchPostById = async (blogId, postId) => {
 
-    let res = await fetch('http://0.0.0.0:5000/getPostInfo/', {
+    let res = await fetch('http://'+server+':'+serverPort+'/getPostInfo/', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -332,7 +336,7 @@ export const uploadSpredsheet = async (file, fileName, blogId) => {
 
     Axios.toString()
 
-    let res = await axios.post("http://0.0.0.0:5000/uploadSpreadsheet/" + blogId, data, {})
+    let res = await axios.post("http://"+server+":"+serverPort+"/uploadSpreadsheet/" + blogId, data, {})
 
     return res
 
@@ -346,7 +350,21 @@ export const uploadConceptsFile = async (file, fileName, blogId, postId) => {
 
     Axios.toString()
 
-    let res = await axios.post("http://0.0.0.0:5000/uploadConcepts/"+blogId+'/'+postId, data, {})
+    let res = await axios.post("http://"+server+":"+serverPort+"/uploadConcepts/"+blogId+'/'+postId, data, {})
+
+    return res
+
+}
+
+export const uploadMeetFile = async (file, fileName, blogId, postId) => {
+
+    const data = new FormData()
+
+    data.append('file', file, fileName)
+
+    Axios.toString()
+
+    let res = await axios.post("http://"+server+":"+serverPort+"/uploadMeet/"+blogId+'/'+postId, data, {})
 
     return res
 
@@ -357,7 +375,7 @@ export const downloadFile = async (fileName) => {
     let file = await setTimeout(() => {
 
         const response = {
-            file: 'http://localhost:5000/getSpreadSheet/' + fileName
+            file: 'http://'+server+':'+serverPort+'/getSpreadSheet/' + fileName
         }
 
         return response.file
@@ -370,7 +388,7 @@ export const downloadFile = async (fileName) => {
 
 export const uploadClass = async (data, postId) => {
 
-    let res = await fetch('http://localhost:5000/uploadClass/' + postId, {
+    let res = await fetch('http://'+server+':'+serverPort+'/uploadClass/' + postId, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -385,7 +403,7 @@ export const uploadClass = async (data, postId) => {
 
 export const updateKeywords = async (blogId, postId, keywords) => {
 
-    let res = await fetch('http://localhost:5000/updateKeywords/'+blogId+'/'+postId+'/', {
+    let res = await fetch('http://'+server+':'+serverPort+'/updateKeywords/'+blogId+'/'+postId+'/', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -400,7 +418,7 @@ export const updateKeywords = async (blogId, postId, keywords) => {
 
 export const getStudentData = async (blogId, studentId) => {
 
-    let res = await fetch('http://localhost:5000/getStudent/'+blogId+'/'+studentId, {
+    let res = await fetch('http://'+server+':'+serverPort+'/getStudent/'+blogId+'/'+studentId, {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
@@ -414,7 +432,7 @@ export const getStudentData = async (blogId, studentId) => {
 
 export const analyseBlog = async (blogId) => {
 
-    let res = await fetch('http://localhost:5000/analyseBlog/' + blogId, {
+    let res = await fetch('http://'+server+':'+serverPort+'/analyseBlog/' + blogId, {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
@@ -429,7 +447,7 @@ export const analyseBlog = async (blogId) => {
 export const sendRegexList = async (blogId, postId, regexList) => {
 
     console.log(JSON.stringify(regexList))
-    let res = await fetch('http://localhost:5000/updateRegex/', {
+    let res = await fetch('http://'+server+':'+serverPort+'/updateRegex/', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
