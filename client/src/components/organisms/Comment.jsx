@@ -18,7 +18,7 @@ const Comment = ({id, author, content, published, replies}) => {
                 <CommentHeader author={author} published={published} />
                 <CommentContent content={content}/>
                 <ExpandRepliesButton id={collapseId} numOfReplies={replies.length} />
-                <div id={collapseId} className="collapse" data-parent="#accordion">
+                <div id={collapseId} data-parent="#accordion">
                     {replies.map(function(reply) {
                         return(
                             <Response key={reply.id} author={reply.author} content={reply.content} published={reply.published} />
