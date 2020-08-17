@@ -23,10 +23,7 @@ const Dashboard = ({student, currentPostId, postList}) => {
                     <Card title="Número de referências"         value={student.posts[currentPostId].numOfReferences} icon="comment" />
                     <Card title="Número de respostas"           value={student.posts[currentPostId].numOfReceivedAnswers} icon="comment" />
                     <Card title="Número de respostas enviadas"  value={student.posts[currentPostId].numOfWrittenAnswers} icon="comment" />
-                    <Card title="Número de conceitos"      value={student.posts[currentPostId].nOfKeywords} icon="comment" />
-                    <div className="rounded shadow" id="Test">
-                        <canvas id="myChart"></canvas>
-                    </div>
+                    <Card title="Número de conceitos"      value={student.posts[currentPostId].totalOfKeywordsUsed} icon="comment" />
                 </div>
             ) : (
                 <h2>Selecione um aluno para visualisar o desempenho</h2>
