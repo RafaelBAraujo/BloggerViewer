@@ -10,13 +10,6 @@ const Dashboard = ({student, currentPostId, postList}) => {
 
     return(
         <div id="dashboard" className="dashboard hide-view">
-            <Form>
-                <Form.Control as="select">
-                    <option>Post</option>
-                    <option>Blog</option>
-                    <option>Relativo</option>
-                </Form.Control>
-            </Form>
             {student !== null && typeof student !== 'undefined' ? (
                 <div>
                     <Card title="Número de comentários"         value={student.posts[currentPostId].numOfComments} icon="comment" />

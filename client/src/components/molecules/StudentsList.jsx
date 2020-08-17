@@ -10,7 +10,6 @@ const StudentsList = ({list}) => {
             <div>
                 <IconButton icon={"chrome_reader_mode"} onClick={() => switchView('blogView')}/>
                 <IconButton icon={"dashboard"} onClick={() => switchView('dashboard')}/>
-                <IconButton icon={"list_alt"} onClick={() => switchView('summaryView')}/>
             </div>
         </div>
     )
