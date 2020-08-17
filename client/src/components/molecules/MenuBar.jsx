@@ -10,11 +10,8 @@ const MenuBar = ({color}) => {
     
     return(
         <div className="tabs" style={{backgroundColor: color}}>
-            <ReturnButton />
             <Tab name="Classroom" className={'tab active-tab'} />
-            <Tab name="Setup" className={'tab'} />
             <SearchBar />
-            <ConfigButton />
             <DrawerButton />
         </div>
     )
