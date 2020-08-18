@@ -208,12 +208,17 @@ class Setup extends Component {
     }
 
     saveConceptRegex = () => {
-        this.setState({ isLoading: true })
-        sendRegexList(this.state.blogData.id, this.state.blogData.post.id, this.state.concepts)
-            .then((res) => {
-                this.setState({ isLoading: false })
-                this.next()
-            })
+        let conceptsToSend = []
+        this.state.concepts.forEach((concept) => {
+            if(concept.regexList.length > 0) {
+                conceptsToSend.push(concept)
+            }
+        })
+        sendRegexList(this.state.blogData.id, this.state.blogData.post.id, conceptsToSend)
+        .then((res) => {
+            this.setState({ isLoading: false })
+            this.next()
+        })
     }
 
     startAnalysis = () => {
