@@ -236,13 +236,15 @@ app.post('/uploadConcepts/:blogId/:postId', (req, res) => {
 
             let csvData = []
             fs.createReadStream(req.file.path)
-            .pipe(parse({delimiter: ',', columns: true}))
+            .pipe(parse({delimiter: ';', columns: true}))
             .on('data', (csvRow) => {
 
                 let data = { keyword: '', regexList: [] }
                 Object.keys(csvRow).forEach((csvColumn) => {
                     if(csvColumn.length > 2) {
-                        data.keyword = csvRow[csvColumn]
+                        if(csvRow[csvColumn].length > 0) {
+                            data.keyword = csvRow[csvColumn]
+                        }
                     } else {
                         if(csvRow[csvColumn].length > 0 && csvRow[csvColumn] != 'undefined') {
                             let regexObj = { options: { sameSentence: false }, regex: '', weight: 1}
@@ -257,7 +259,10 @@ app.post('/uploadConcepts/:blogId/:postId', (req, res) => {
                 console.log('data:')
                 console.log(JSON.stringify(data))
                 
-                csvData.push(data)
+                if(data.keyword.length > 0)
+                {
+                    csvData.push(data)
+                }
 
             })
             .on('end', () => {
