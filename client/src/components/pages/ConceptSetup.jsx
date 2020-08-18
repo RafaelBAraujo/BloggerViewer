@@ -10,7 +10,31 @@ class ConceptSetup extends Component {
         super(props)
         this.state = {
             concepts: this.props.concepts,
+            filteredConcepts: this.props.concepts,
             conceptRegex: {}
+        }
+
+        this.queryStudent = (input) => {
+
+            let query = input.target.value
+            let filteredConcepts = []
+
+            if(query !== "") {
+                this.state.concepts.forEach((concept) => {
+                    if(concept.keyword.match(new RegExp(query, 'gi'))) {
+                        filteredConcepts.push(concept)
+                    }
+                })
+                this.setState({
+                    filteredConcepts: filteredConcepts
+                })
+            }
+            else {
+                this.setState({
+                    filteredConcepts: this.state.concepts
+                })
+            }
+
         }
     }
 
@@ -19,10 +43,16 @@ class ConceptSetup extends Component {
         let key = 0
         return(
             <div className="concepts">
-                <h1 className="concepts-header">Conceitos</h1>
+                <div className="concepts-header">
+                    <h1>Conceitos</h1>
+                    <div className="email-input quick-style">
+                        <i className="material-icons">search</i>
+                        <input type="text" placeholder={''} onKeyUp={this.queryStudent} />
+                    </div>
+                </div>
 
                 <div className="concept-list">
-                    {this.state.concepts.map((concept, index) => {
+                    {this.state.filteredConcepts.map((concept, index) => {
                         key++
                         return(
                             <Concept key={'concept'+key} index={index} conceptIndex={index} concept={concept} updateRegexList={this.props.updateRegexList} />

@@ -12,6 +12,10 @@
 
 .concepts-header {
     margin-left: 1vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
 }
 
 .concept-list {
