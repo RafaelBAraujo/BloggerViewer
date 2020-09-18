@@ -1,0 +1,2 @@
+node /home/rafael/BloggerViewer/server.js &
+npm start --prefix /home/rafael/BloggerViewer/client &
