@@ -44,6 +44,8 @@ blogs['tgs'] = 'https://tgs-bsi.blogspot.com/'
 
 app.post('/getBlogInfo/', (req, res) => {
 
+    try {
+
     let body = JSON.parse(JSON.stringify(req.body))
     lastUrl = body.blogUrl
 
@@ -55,9 +57,16 @@ app.post('/getBlogInfo/', (req, res) => {
         })
     })    
 
+    } catch(error) {
+        Utils.logError(error)
+    }
+
 })
 
 app.post('/getPostInfo/', (req, res) => {
+
+    try {
+
 
     let body = JSON.parse(JSON.stringify(req.body))
     let blogId = body.blogId
@@ -67,9 +76,16 @@ app.post('/getPostInfo/', (req, res) => {
         res.json(post)
     })
 
+} catch(error) {
+    Utils.logError(error)
+}
+
 })
 
 app.get('/visualizer/lastBlog/getLastPost', (req, res) => {
+
+    try {
+
 
 
     BloggerRequestApi.getBlogId(lastUrl).then((blog) => {
@@ -88,9 +104,15 @@ app.get('/visualizer/lastBlog/getLastPost', (req, res) => {
         })
     })
 
+    } catch(error) {
+        Utils.logError(error)
+    }
+
 })
 
 app.get('/visualizer/:blog/getPost/:id', (req, res) => {
+
+    try {
 
     let start = new Date() 
 
@@ -118,9 +140,17 @@ app.get('/visualizer/:blog/getPost/:id', (req, res) => {
         })
     // })
 
+    } catch(error) {
+        Utils.logError(error)
+    }
+
 })
 
 app.get('/visualizer/test', (req, res) => {
+
+    try{
+        
+    
 
     let blogUrl = blogs['adm_si']
     
@@ -142,9 +172,17 @@ app.get('/visualizer/test', (req, res) => {
         })
     })
 
+    } catch(error) {
+        Utils.logError(error)
+    }
+
 })
 
 app.get('/analyseBlog/:blogId', (req, res) => {
+
+    try{
+        
+    
 
     let blogId = req.params.blogId
 
@@ -154,10 +192,15 @@ app.get('/analyseBlog/:blogId', (req, res) => {
 
     })
 
+    } catch(error) {
+        Utils.logError(error)
+    }
+
 })
 
 app.get('visualizer/mock', (req, res) => {
 
+    
     res.json(BloggerMock.getPost())
 
 })
@@ -175,6 +218,10 @@ var storage = multer.diskStorage({
 let upload = multer({ storage: storage }).single('file')
 
 app.post('/uploadSpreadsheet/:blogId', (req, res) => {
+
+    try{
+        
+    
 
     upload(req, res, function (err) {
 
@@ -217,9 +264,17 @@ app.post('/uploadSpreadsheet/:blogId', (req, res) => {
 
     })
 
+} catch(error) {
+    Utils.logError(error)
+}
+
 })
 
 app.post('/uploadConcepts/:blogId/:postId', (req, res) => {
+
+    try{
+        
+   
 
     let blogId = req.params.blogId
     let postId = req.params.postId
@@ -280,10 +335,17 @@ app.post('/uploadConcepts/:blogId/:postId', (req, res) => {
         }
 
     })
+    } catch(error) {
+        Utils.logError(error)
+    }
 
 })
 
 app.post('/updateRegex/', (req, res) => {
+
+    try{
+        
+  
 
     let body = JSON.parse(JSON.stringify(req.body))
 
@@ -291,10 +353,16 @@ app.post('/updateRegex/', (req, res) => {
     firebase.uploadData('/classes/'+body.blogId+'/posts/'+body.postId+'/keywords/', body.regexList)
 
     res.status(200).send(req.body)
+    } catch(error) {
+        Utils.logError(error)
+    }
 })
 
 app.post('/uploadFile/', (req, res) => {
 
+    try{
+        
+    
 
     upload(req, res, function (err) {
 
@@ -316,9 +384,18 @@ app.post('/uploadFile/', (req, res) => {
 
     })
 
+} catch(error) {
+    Utils.logError(error)
+}
+
+
 })
 
 app.get('/getClass/:postId', (req, res) => {
+
+    try{
+        
+    
 
     let postId = req.params.postId
 
@@ -326,9 +403,17 @@ app.get('/getClass/:postId', (req, res) => {
         res.json(data)
     })
 
+    } catch(error) {
+        Utils.logError(error)
+    }
+
 })
 
 app.get('/getClassFile/:query', (req, res) => {
+
+    try{
+        
+    
 
     let query = req.params.query
 
@@ -352,9 +437,17 @@ app.get('/getClassFile/:query', (req, res) => {
 
     })
 
+    } catch(error) {
+        Utils.logError(error)
+    }
+
 })
 
 app.get('/getSpreadsheet/:blogId/:postId', (req, res) => {
+
+    try{
+        
+    
 
     let blogId = req.params.blogId
     let postId = req.params.postId
@@ -443,9 +536,17 @@ app.get('/getSpreadsheet/:blogId/:postId', (req, res) => {
             
     })
 
+    } catch(error) {
+        Utils.logError(error)
+    }
+
 })
 
 app.get('/getSpreadsheet/:query', (req, res) => {
+
+    try{
+        
+   
 
     let query = req.params.query
 
@@ -488,10 +589,17 @@ app.get('/getSpreadsheet/:query', (req, res) => {
 
     })
 
+    } catch(error) {
+        Utils.logError(error)
+    }
+
 })
 
 app.get('/getStudent/:blogId/:id', (req, res) => {
 
+    try{
+        
+    
     let studentId = req.params.id
     let blogId = req.params.blogId
 
@@ -501,9 +609,18 @@ app.get('/getStudent/:blogId/:id', (req, res) => {
 
     })
 
+    } catch(error) {
+        Utils.logError(error)
+    }
+
+
 })
 
 app.post('/uploadClass/:postId', (req, res) => {
+
+    try{
+        
+    
 
     let data = JSON.parse(JSON.stringify(req.body))
 
@@ -522,10 +639,18 @@ app.post('/uploadClass/:postId', (req, res) => {
             res.status(200).send(req.body)
         }
     })
+
+    } catch(error) {
+        Utils.logError(error)
+    }
         
 })
 
 app.post('/updateKeywords/:blogId/:postId', (req, res) => {
+
+    try{
+        
+    
 
     let blogId = req.params.blogId
     let postId = req.params.postId
@@ -549,6 +674,10 @@ app.post('/updateKeywords/:blogId/:postId', (req, res) => {
             res.status(200).send(req.body)
         }
     })
+
+    } catch(error) {
+    Utils.logError(error)
+    }
         
 })
 
