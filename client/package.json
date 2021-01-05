@@ -5,7 +5,7 @@
   "dependencies": {},
   "devDependencies": {
     "@types/bootstrap": "^4.3.0",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "bootstrap": "^4.3.1",
     "create-react-app": "^3.0.1",
     "jquery": "^3.5.0",
